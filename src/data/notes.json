@@ -1,0 +1,316 @@
+[
+  {
+  "category": "Cpp",
+  "title": "Getting Started: Coding on C++ Compilers Online",
+  "sections": [
+    {
+      "title": "What is C++?",
+      "content": "C++ is a powerful, high-performance programming language that supports both procedural and object-oriented programming paradigms. It was developed as an extension of the C language to include features like classes and objects."
+    },
+    {
+      "title": "Why Learn C++?",
+      "list": [
+        {
+          "title": "Performance",
+          "content": "C++ allows fine-grained control over system resources, making it ideal for game development, systems programming, and applications requiring high performance."
+        },
+        {
+          "title": "Object-Oriented Programming",
+          "content": "Supports classes and objects, helping to build modular and reusable code."
+        },
+        {
+          "title": "Widely Used",
+          "content": "Used in software like browsers, operating systems, and large-scale applications."
+        }
+      ]
+    },
+    {
+      "title": "Creating Your First Program",
+      "steps": [
+        "Open your online C++ compiler.",
+        "Create a new file or project.",
+        "Type the following code.",
+        "Click 'Run' or 'Compile and Execute'.",
+        "You should see: Hello, world!"
+      ],
+      "code": "#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << \"Hello, world!\" << endl;\n    return 0;\n}"
+    },
+    {
+      "title": "Variable Declaration",
+      "content": "Variables must be declared with a type before use.",
+      "code": "int age;\ndouble price;\nchar grade;\nstring name;"
+    },
+    {
+      "title": "Input Taking in C++",
+      "content": "Use cin to take input from the user.",
+      "code": "int age;\ncout << \"Enter your age: \";\ncin >> age;"
+    },
+    {
+      "title": "C++ Syntax: Loops",
+      "content": "C++ supports for, while, and do-while loops to repeat blocks of code.",
+      "code": "for(int i = 0; i < 10; i++) {\n    cout << i << endl;\n}\n\nint i = 0;\nwhile(i < 10) {\n    cout << i << endl;\n    i++;\n}\n\ndo {\n    cout << i << endl;\n    i++;\n} while(i < 10);"
+    },
+    {
+      "title": "C++ Syntax: Conditional Statements",
+      "content": "Control program flow using if, else if, and else statements.",
+      "code": "if(condition) {\n    // code when condition is true\n} else if(anotherCondition) {\n    // code when anotherCondition is true\n} else {\n    // code when all conditions are false\n}"
+    },
+    {
+      "title": "C++ Syntax: Methods (Functions)",
+      "content": "Functions help organize reusable blocks of code.",
+      "code": "int add(int a, int b) {\n    return a + b;\n}"
+    }
+  ]
+},
+ {
+  "category": "Java",
+  "title": "Getting Started: Coding on Java Compilers Online",
+  "sections": [
+    {
+      "title": "What is Java?",
+      "content": "Java is a high-level, class-based, and object-oriented programming language. With its 'Write Once, Run Anywhere' (WORA) capability, Java code can run on any system equipped with the Java Virtual Machine (JVM), offering platform independence. It's widely used for web, mobile, and enterprise applications."
+    },
+    {
+      "title": "Why Learn Java?",
+      "list": [
+        {
+          "title": "Versatility",
+          "content": "Java is used across Android development, desktop applications, web apps using Servlets/JSPs, and enterprise software."
+        },
+        {
+          "title": "Community and Support",
+          "content": "Java has a huge global developer community, offering support via forums, tutorials, and libraries."
+        },
+        {
+          "title": "Job Opportunities",
+          "content": "Java developers are consistently in demand in tech companies of all sizes, ensuring job security and growth."
+        }
+      ]
+    },
+    {
+      "title": "Creating Your First Program",
+      "steps": [
+        "Navigate to the Mentee online Java Compiler.",
+        "Start a new project on the compiler page.",
+        "In the editor, type the following code.",
+        "Press the 'Run' or 'Compile and Execute' button.",
+        "You should see: Hello, world!"
+      ],
+      "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, world!\");\n    }\n}"
+    },
+    {
+      "title": "Variable Declaration and Data Types",
+      "content": "Variables are containers for storing data values. Java is statically typed, so you must declare a variable's type before using it.",
+      "code": "// Integer variable\nint age = 25;\n\n// Floating-point variable\ndouble price = 19.99;\n\n// Character variable\nchar grade = 'A';\n\n// Boolean variable\nboolean isJavaFun = true;\n\n// String variable\nString name = \"Alice\";"
+    },
+    {
+      "title": "Taking User Input",
+      "content": "Java uses the Scanner class from the java.util package to read input from the user.",
+      "code": "import java.util.Scanner;\n\npublic class InputExample {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        \n        System.out.print(\"Enter your name: \");\n        String name = scanner.nextLine();\n\n        System.out.print(\"Enter your age: \");\n        int age = scanner.nextInt();\n\n        System.out.println(\"Hello \" + name + \", you are \" + age + \" years old.\");\n    }\n}"
+    },
+    {
+      "title": "Java Syntax: Loops",
+      "content": "Loops help execute a block of code repeatedly. Java supports for, while, and do-while loops.",
+      "code": "// For loop\nfor(int i = 0; i < 10; i++) {\n    System.out.println(i);\n}\n\n// While loop\nint i = 0;\nwhile(i < 10) {\n    System.out.println(i);\n    i++;\n}\n\n// Do-while loop\ndo {\n    System.out.println(i);\n    i++;\n} while(i < 10);"
+    },
+    {
+      "title": "Java Syntax: Conditional Statements",
+      "content": "Conditional logic allows your program to make decisions using if, else if, and else.",
+      "code": "if(condition) {\n    // Code for true condition\n} else if(anotherCondition) {\n    // Code for another true condition\n} else {\n    // Code for false conditions\n}"
+    },
+    {
+      "title": "Java Syntax: Methods",
+      "content": "In Java, functions are known as methods and must be written inside a class. They are used to perform specific tasks.",
+      "code": "public int add(int a, int b) {\n    return a + b;\n}"
+    }
+  ]
+},
+{
+  "category": "C",
+  "title": "Getting Started: Coding on C Compilers Online",
+  "sections": [
+    {
+      "title": "What is C?",
+      "content": "C is a procedural, high-level programming language developed in the early 1970s by Dennis Ritchie. It's widely used for system programming and embedded devices."
+    },
+    {
+      "title": "Why Learn C?",
+      "list": [
+        {
+          "title": "Foundation Language",
+          "content": "Many modern languages are influenced by C."
+        },
+        {
+          "title": "Performance",
+          "content": "Efficient and fast programs for system-level tasks."
+        },
+        {
+          "title": "Portability",
+          "content": "Runs on many hardware platforms."
+        }
+      ]
+    },
+    {
+      "title": "Creating Your First Program",
+      "steps": [
+        "Open your online C compiler.",
+        "Write the following code.",
+        "Click 'Run' or 'Compile and Execute'.",
+        "You should see: Hello, world!"
+      ],
+      "code": "#include <stdio.h>\n\nint main() {\n    printf(\"Hello, world!\\n\");\n    return 0;\n}"
+    },
+    
+    {
+      "title": "Variable Declaration",
+      "content": "Declare variables with their data types before using them.",
+      "code": "int age;\nfloat price;\nchar letter;"
+    },
+    {
+      "title": "Input Taking in C",
+      "content": "Use scanf to take user input.",
+      "code": "int age;\nprintf(\"Enter your age: \");\nscanf(\"%d\", &age);"
+    },
+    {
+      "title": "C Syntax: Loops",
+      "content": "Use for, while, and do-while loops to execute repeated tasks.",
+      "code": "for(int i = 0; i < 10; i++) {\n    printf(\"%d\\n\", i);\n}\n\nint i = 0;\nwhile(i < 10) {\n    printf(\"%d\\n\", i);\n    i++;\n}\n\ndo {\n    printf(\"%d\\n\", i);\n    i++;\n} while(i < 10);"
+    },
+    {
+      "title": "C Syntax: Conditional Statements",
+      "content": "Control program flow using if, else if, and else.",
+      "code": "if(condition) {\n    // code when true\n} else if(anotherCondition) {\n    // code for another true condition\n} else {\n    // code when false\n}"
+    },
+    {
+      "title": "C Syntax: Methods (Functions)",
+      "content": "Functions modularize code and can return values.",
+      "code": "int add(int a, int b) {\n    return a + b;\n}"
+    }
+  ]
+},
+{
+  "category": "Python",
+  "title": "Getting Started: Coding on Python Compilers Online",
+  "sections": [
+    {
+      "title": "What is Python?",
+      "content": "Python is a high-level, interpreted programming language known for its readability and ease of use. It supports multiple programming paradigms, including procedural, object-oriented, and functional programming."
+    },
+    {
+      "title": "Why Learn Python?",
+      "list": [
+        {
+          "title": "Ease of Learning",
+          "content": "Simple syntax makes it beginner-friendly."
+        },
+        {
+          "title": "Versatility",
+          "content": "Used in web development, data science, AI, automation, and more."
+        },
+        {
+          "title": "Large Community",
+          "content": "Extensive libraries and community support."
+        }
+      ]
+    },
+    {
+      "title": "Creating Your First Program",
+      "steps": [
+        "Open your online Python compiler.",
+        "Write the code below.",
+        "Click 'Run' or 'Execute'.",
+        "You should see: Hello, world!"
+      ],
+      "code": "print(\"Hello, world!\")"
+    },
+    {
+      "title": "Variable Declaration",
+      "content": "Variables are created when first assigned; no explicit declaration needed.",
+      "code": "age = 25\nname = \"Alice\"\nprice = 19.99"
+    },
+    {
+  "title": "Input Taking in Python",
+  "content": "Use input() to get user input as a string. In Judge0 or other non-interactive environments, prefer sys.stdin.readline() to simulate stdin input.",
+  "code": "import sys\nname = sys.stdin.readline().strip()\nprint(f\"Hello, {name}\")"
+}
+,
+    {
+      "title": "Python Syntax: Loops",
+      "content": "Python supports for and while loops.",
+      "code": "for i in range(10):\n    print(i)\n\ni = 0\nwhile i < 10:\n    print(i)\n    i += 1"
+    },
+    {
+      "title": "Python Syntax: Conditional Statements",
+      "content": "Use if, elif, and else to control flow.",
+      "code": "if condition:\n    # code if true\nelif another_condition:\n    # code if another true condition\nelse:\n    # code if false"
+    },
+    {
+      "title": "Python Syntax: Methods (Functions)",
+      "content": "Functions are defined using def keyword.",
+      "code": "def add(a, b):\n    return a + b"
+    }
+  ]
+},
+{
+  "category": "JavaScript",
+  "title": "Getting Started: Coding on JavaScript Compilers Online",
+  "sections": [
+    {
+      "title": "What is JavaScript?",
+      "content": "JavaScript is a versatile, high-level programming language primarily used to create interactive effects within web browsers."
+    },
+    {
+      "title": "Why Learn JavaScript?",
+      "list": [
+        {
+          "title": "Web Development",
+          "content": "JavaScript is essential for front-end and increasingly back-end web development."
+        },
+        {
+          "title": "Versatility",
+          "content": "Can be used for web, mobile apps, server-side scripting, and more."
+        },
+        {
+          "title": "Large Ecosystem",
+          "content": "Thousands of libraries and frameworks available."
+        }
+      ]
+    },
+    {
+      "title": "Creating Your First Program",
+      "steps": [
+        "Open the Mentee JavaScript Compiler.",
+        "Write your JavaScript code.",
+        "Press 'Run' to execute.",
+        "You should see: Hello, world!"
+      ],
+      "code": "console.log(\"Hello, world!\");"
+    },
+    {
+      "title": "Variable Declaration",
+      "content": "Variables can be declared using var, let, or const.",
+      "code": "let number;\nconst pi = 3.14;\nvar name = \"John\";"
+    },
+    {
+      "title": "Input Taking in JavaScript",
+      "content": "Use prompt() to get input from the user (browser environment). In environments like Judge0 or Node.js where prompt() is not available, use fs.readFileSync to take input from stdin.",
+      "code": "const fs = require(\"fs\");\nlet input = fs.readFileSync(0, \"utf8\").trim().split(\"\\n\");\nlet name = input[0];\nconsole.log(`Hello, ${name}`);"
+  },
+    {
+      "title": "JavaScript Syntax: Loops",
+      "content": "JavaScript supports for, while, and do-while loops.",
+      "code": "for(let i = 0; i < 10; i++) {\n    console.log(i);\n}\n\nlet i = 0;\nwhile(i < 10) {\n    console.log(i);\n    i++;\n}\n\ndo {\n    console.log(i);\n    i++;\n} while(i < 10);"
+    },
+    {
+      "title": "JavaScript Syntax: Conditional Statements",
+      "content": "Use if, else if, and else to control program flow.",
+      "code": "if(condition) {\n    // code if true\n} else if(anotherCondition) {\n    // code if another true condition\n} else {\n    // code if false\n}"
+    },
+    {
+      "title": "JavaScript Syntax: Methods (Functions)",
+      "content": "Functions are reusable blocks of code defined with the function keyword. They help break down tasks.",
+      "code": "function add(a, b) {\n    return a + b;\n}"
+    }
+  ]
+}
+]
