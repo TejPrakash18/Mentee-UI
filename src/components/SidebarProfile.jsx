@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { Pencil, X, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import userService from "../services/userService";
-import tejAvatar from "/avatar6.png";
-import {FaUser } from "react-icons/fa"
+import tejAvatar from "/profile5.png";
 
 
 /* ============= Profile Card ============= */
@@ -46,7 +45,7 @@ const SidebarProfile = () => {
         <img
           src={avatarUrl || tejAvatar}
           onError={(e) => (e.currentTarget.src = tejAvatar)}
-          className="w-16 h-16 rounded-full border-2 border-purple-500"
+          className="w-16 h-16 rounded-full border-1 border-orange-700 bg-amber-400"
         />
         <div>
           <h2 className="font-bold text-xl">{profile.name}</h2>

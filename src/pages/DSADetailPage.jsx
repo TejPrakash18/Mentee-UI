@@ -139,7 +139,7 @@ const DSADetailPage = () => {
         })
         .catch(() => toast.warning("Error marking as complete."));
     } else {
-      toast.warning(
+      alert(
         `Output doesn't match.\nExpected: ${expectedOutput}\nGot: ${cleanedOutput}`
       );
     }
