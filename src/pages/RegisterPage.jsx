@@ -37,7 +37,7 @@ const handleSubmit = async (e) => {
         alert("Registration successful!");
         navigate('/login');
     } catch (error) {
-        console.error("Registration Failed:", error.response?.data || error.message);
+        console.error("Registration Failed:", error.response?.data || error.message ||error.response.data.message);
         alert("Registration failed. Please try again.");
     }
 };

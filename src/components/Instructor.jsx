@@ -2,7 +2,7 @@
 import InstructorCard from "./InstructorCard";
 import neha from "../assets/neha.jpg";
 import tej from "../assets/tej1.webp";
-import vaishali from "/avatar6.png";
+// import vaishali from "/avatar6.png";
   import {FaUser } from "react-icons/fa"
 
 const InstructorSection = () => (

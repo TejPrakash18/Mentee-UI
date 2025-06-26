@@ -11,8 +11,8 @@ import {
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { toast } from "sonner";
-import { RiQuestionAnswerFill } from "react-icons/ri";
 import { ImCross } from "react-icons/im";
+import { HiMiniBarsArrowUp } from "react-icons/hi2";
 import NotFoundPage from "./NotFoundPage"; // ✅ Import this
 
 const compilers = [
@@ -388,7 +388,7 @@ const DSADetailPage = () => {
         className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-orange-700 text-white p-4 rounded-full shadow-lg transition"
         onClick={() => setShowDSASidebar(true)}
       >
-        <RiQuestionAnswerFill />
+        <HiMiniBarsArrowUp size={20}/>
       </button>
 
       {/* Sidebar Modal */}

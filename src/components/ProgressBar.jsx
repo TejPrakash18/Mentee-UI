@@ -1,51 +1,121 @@
 import { useEffect, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import {
-  fetchCompletedProjectsCount,
+  getBlogCountByCategory,
+  getCompletedBlogCountByCategory,
+} from "../services/blogService";
+import {
+  getTotalCountOfDSAQuestionDifficultyWise,
   fetchDSACompletedCountByDifficulty,
-} from "../services/progressService";
+} from "../services/dsaService";
 
 const ProgressBar = () => {
   const [progress, setProgress] = useState({
     dsa: {
-      basic: 40,
-      easy: 45,
-      medium: 26,
+      basic: 0,
+      easy: 0,
+      medium: 0,
       solvedBasic: 0,
       solvedEasy: 0,
       solvedMedium: 0,
     },
-    projects: { total: 6, completed: 0 },
+    blogs: {
+      technical: 0,
+      core: 0,
+      projects: 0,
+      solvedTechnical: 0,
+      solvedCore: 0,
+      solvedProjects: 0,
+    },
   });
-
-  const [year] = useState(2025);
 
   const username = localStorage.getItem("username");
 
   useEffect(() => {
     if (!username) return;
+
     (async () => {
-      const [projCnt, dsaCnt] = await Promise.all([
-        fetchCompletedProjectsCount(username),
-        fetchDSACompletedCountByDifficulty(username),
-      ]);
-      setProgress((p) => ({
-        ...p,
-        dsa: {
-          ...p.dsa,
-          solvedBasic: dsaCnt.basic || 0,
-          solvedEasy: dsaCnt.easy || 0,
-          solvedMedium: dsaCnt.medium || 0,
-        },
-        projects: { ...p.projects, completed: projCnt || 0 },
-      }));
+      try {
+        const [
+          blogCategoryCount,
+          completedBlogCountByCategory,
+          dsaCategoryCount,
+          completedDsaByDifficulty,
+        ] = await Promise.all([
+          getBlogCountByCategory(),
+          getCompletedBlogCountByCategory(username),
+          getTotalCountOfDSAQuestionDifficultyWise(),
+          fetchDSACompletedCountByDifficulty(username),
+        ]);
+
+        const normalizedBlogs = Object.fromEntries(
+          Object.entries(blogCategoryCount || {}).map(([key, value]) => [
+            key.toLowerCase().replace(/\s+/g, ""),
+            value,
+          ])
+        );
+
+        const normalizedCompletedBlogs = Object.fromEntries(
+          Object.entries(completedBlogCountByCategory || {}).map(([key, value]) => [
+            key.toLowerCase().replace(/\s+/g, ""),
+            value,
+          ])
+        );
+
+        const normalizedDSA = Object.fromEntries(
+          Object.entries(dsaCategoryCount || {}).map(([key, value]) => [
+            key.toLowerCase(),
+            value,
+          ])
+        );
+
+        setProgress({
+          dsa: {
+            basic: normalizedDSA.basic || 0,
+            easy: normalizedDSA.easy || 0,
+            medium: normalizedDSA.medium || 0,
+            solvedBasic: completedDsaByDifficulty.basic || 0,
+            solvedEasy: completedDsaByDifficulty.easy || 0,
+            solvedMedium: completedDsaByDifficulty.medium || 0,
+          },
+          blogs: {
+            technical: normalizedBlogs.technical || 0,
+            core: normalizedBlogs.corefundamental || 0,
+            projects: normalizedBlogs.projectsblog || 0,
+            solvedTechnical: normalizedCompletedBlogs.technical || 0,
+            solvedCore: normalizedCompletedBlogs.corefundamental || 0,
+            solvedProjects: normalizedCompletedBlogs.projectsblog || 0,
+          },
+        });
+      } catch (error) {
+        console.error("Error loading progress data:", error);
+      }
     })();
   }, [username]);
 
-  const { basic, easy, medium, solvedBasic, solvedEasy, solvedMedium } =
-    progress.dsa;
+  const {
+    basic,
+    easy,
+    medium,
+    solvedBasic,
+    solvedEasy,
+    solvedMedium,
+  } = progress.dsa;
+
   const dsaTotal = basic + easy + medium;
   const dsaSolved = solvedBasic + solvedEasy + solvedMedium;
+
+  const {
+    technical,
+    core,
+    projects,
+    solvedTechnical,
+    solvedCore,
+    solvedProjects,
+  } = progress.blogs;
+
+  const blogsTotal = technical + core + projects;
+  const blogsSolved = solvedTechnical + solvedCore + solvedProjects;
 
   return (
     <section className="bg-[#1d1c20]/60 backdrop-blur rounded-2xl p-6 lg:p-8 shadow-xl text-white min-h-[32rem] flex flex-col space-y-8">
@@ -79,14 +149,29 @@ const ProgressBar = () => {
             },
           ]}
         />
+
         <ProgressBlock
-          title="Projects"
-          solved={`${progress.projects.completed}/${progress.projects.total}`}
+          title="Blogs"
+          solved={`${blogsSolved}/${blogsTotal}`}
           bars={[
             {
+              label: "Technical",
+              done: solvedTechnical,
+              total: technical,
+              color: "bg-blue-400",
+              track: "bg-blue-900",
+            },
+            {
+              label: "Fundamental",
+              done: solvedCore,
+              total: core,
+              color: "bg-pink-400",
+              track: "bg-pink-900",
+            },
+            {
               label: "Projects",
-              done: progress.projects.completed,
-              total: progress.projects.total,
+              done: solvedProjects,
+              total: projects,
               color: "bg-purple-400",
               track: "bg-purple-900",
             },

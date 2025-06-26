@@ -19,6 +19,29 @@ export const getAllDSA = async () => {
     }
 };
 
+export const getTotalCountOfDSAQuestion = async () => {
+  try {
+    const response = await api.get('/dsa/count');
+    // console.log("DSA Total Count:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(' Error fetching total DSA question count:', error);
+    return 0;
+  }
+};
+
+export const getTotalCountOfDSAQuestionDifficultyWise = async () => {
+  try {
+    const response = await api.get('/dsa/count/difficulty');
+    // console.log(" DSA Count by Difficulty:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching DSA difficulty-wise count:', error);
+    return {};
+  }
+};
+
+
 export const getQuestionById = async (id) => {
   try {
     const response = await api.get(`/dsa/question/${id}`);
@@ -51,4 +74,11 @@ export const getCompletedQuestions = async (username) => {
     console.error("Error fetching completed questions:", error);
     return [];
   }
+};
+
+export const fetchDSACompletedCountByDifficulty = async (username) => {
+    const response = await api.get(`/dsa/completed/count/difficulty`, {
+        params: { username }
+    });
+    return response.data;
 };

@@ -10,11 +10,11 @@ import WhyChooseUs from "./components/WhyChooseUs";
 import Instructor from "./components/Instructor";
 import Footer from "./components/Footer";
 import RegisterPage from "./pages/RegisterPage";
-import ProjectPage from "./pages/ProjectPage";
+import BlogPage from "./pages/BlogPage";
 import DSAPage from "./pages/DSAPage";
 import CompilerPage from "./pages/CompilerPage";
 // import UserDashboard from "./pages/UserDashboard"
-import ProjectDetailPage from "./pages/ProjectDetailPage";
+import BlogDetailPage from "./pages/BlogDetailPage";
 import PrivateRoute from "./routes/PrivateRoute";
 import ForgotPassword from "./pages/ForgotPassword";
 import FAQPage from "./pages/FAQPage";
@@ -22,6 +22,7 @@ import TrustedCompanies from "./components/TrustedCompanies";
 import NotFoundPage from "./pages/NotFoundPage";
 import DashboardPage from "./pages/UserDashboard";
 import DSADetailPage from "./pages/DSADetailPage";
+
 
 function App() {
   return (
@@ -52,8 +53,8 @@ function App() {
           <Route path="/dsa/question/:id" element={<DSADetailPage />} />
           
           {/* 🛠 Handle invalid DSA paths */}
-          <Route path="/projects" element={<ProjectPage />} />
-          <Route path="/projects/:id" element={<ProjectDetailPage />} />
+          <Route path="/blogs" element={<BlogPage />} />
+          <Route path="/blogs/:id" element={<BlogDetailPage />} />
           
           {/* 🛠 Handle invalid project paths */}
           <Route
