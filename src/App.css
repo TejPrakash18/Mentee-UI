@@ -17,6 +17,30 @@ html, body {
   background: #777;
 }
 
+/* Custom scrollbar for horizontal scroll */
+.custom-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #2a2a2e;
+  border-radius: 100vh;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, #4ade80, #22c55e); /* gradient green */
+  border-radius: 100vh;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to right, #22c55e, #16a34a);
+}
+
+.custom-scroll {
+  scrollbar-color: #22c55e #2a2a2e; /* Firefox */
+  scrollbar-width: thin;
+}
+
 
 @keyframes progress-bar {
   from {

@@ -13,23 +13,36 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Clear previous error
+
     try {
       const data = await authService.login(username, password);
       loginUser(data.token);
-      navigate("/");
       toast.success("Login Successfully!");
+      navigate("/");
     } catch (err) {
-      toast.error("login field");
-      console.error("Error during login:", err);
+      const msg =
+        err?.response?.data?.message ||
+        err?.response?.data ||
+        "Login failed. Please try again.";
+      setError(msg);
+      toast.error(msg);
+      console.error("Login Error:", err);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black">
+    <div className="flex items-center justify-center min-h-screen bg-black px-4">
       <div className="bg-[#1D1C20] p-10 rounded-lg shadow-lg w-full sm:w-96 space-y-8">
         <h2 className="text-3xl font-semibold text-center text-white">Login</h2>
+
         <form className="space-y-6" onSubmit={handleSubmit}>
-          {error && <p className="text-red-400 text-sm">{error}</p>}
+          {error && (
+            <div className="text-red-400 px-4 py-2 rounded text-sm shadow text-center">
+              {error}
+            </div>
+          )}
+
           <div>
             <label className="block text-sm font-medium text-white">
               Username
@@ -38,10 +51,12 @@ const LoginPage = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-3 mt-2 border border-orange-300 rounded-lg text-white bg-[#1D1C20]"
+              className="w-full px-4 py-3 mt-2 border border-orange-300 rounded-lg text-white bg-[#1D1C20] placeholder-orange-400 focus:ring-2 focus:ring-orange-500"
+              placeholder="Enter your username"
               required
             />
           </div>
+
           <div>
             <label className="block text-sm font-medium text-white">
               Password
@@ -50,17 +65,20 @@ const LoginPage = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 mt-2 border border-orange-300 rounded-lg text-white bg-[#1D1C20]"
+              className="w-full px-4 py-3 mt-2 border border-orange-300 rounded-lg text-white bg-[#1D1C20] placeholder-orange-400 focus:ring-2 focus:ring-orange-500"
+              placeholder="Enter your password"
               required
             />
           </div>
+
           <button
             type="submit"
-            className="w-full py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600"
+            className="w-full py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition duration-200"
           >
             Login
           </button>
         </form>
+
         <div className="text-center space-y-2">
           <p className="text-sm text-white">
             Don't have an account?{" "}
@@ -71,7 +89,6 @@ const LoginPage = () => {
               Register Here
             </Link>
           </p>
-
           <p className="text-sm text-white">
             Forgot the password?{" "}
             <Link

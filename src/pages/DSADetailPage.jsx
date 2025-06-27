@@ -8,6 +8,7 @@ import {
   getAllDSA,
   getCompletedQuestions,
 } from "../services/dsaService";
+import { logUserActivity } from "../services/userActivityService";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { toast } from "sonner";
@@ -133,15 +134,19 @@ const DSADetailPage = () => {
 
     if (cleanedOutput === expectedOutput) {
       markDSAComplete(username, question.title)
-        .then(() => {
-          toast.success("Question marked as complete!");
+        .then(async () => {
+          toast.success("✅ Question marked as complete!");
           setIsCompleted(true);
+
+          // ✅ Log activity to streak API
+          try {
+            await logUserActivity(username);
+            // console.log("User activity logged");
+          } catch (err) {
+            console.warn("Failed to log user activity", err);
+          }
         })
         .catch(() => toast.warning("Error marking as complete."));
-    } else {
-      alert(
-        `Output doesn't match.\nExpected: ${expectedOutput}\nGot: ${cleanedOutput}`
-      );
     }
   };
 
@@ -219,9 +224,7 @@ const DSADetailPage = () => {
   if (notFound) {
     return (
       <>
-       
         <NotFoundPage />
-         
       </>
     );
   }
@@ -388,7 +391,7 @@ const DSADetailPage = () => {
         className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-orange-700 text-white p-4 rounded-full shadow-lg transition"
         onClick={() => setShowDSASidebar(true)}
       >
-        <HiMiniBarsArrowUp size={20}/>
+        <HiMiniBarsArrowUp size={20} />
       </button>
 
       {/* Sidebar Modal */}

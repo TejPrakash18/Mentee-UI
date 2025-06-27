@@ -8,6 +8,7 @@ import {
   getTotalCountOfDSAQuestionDifficultyWise,
   fetchDSACompletedCountByDifficulty,
 } from "../services/dsaService";
+import UserActivityHeatmap from "./UserActivityHeatmap";
 
 const ProgressBar = () => {
   const [progress, setProgress] = useState({
@@ -178,6 +179,9 @@ const ProgressBar = () => {
           ]}
         />
       </div>
+<UserActivityHeatmap username={username}/>
+
+
 
       <footer className="text-xs text-gray-500 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between pt-4 border-t border-[#2c2c2f]">
         <span>© 2025 Tej · Smart LMS</span>
