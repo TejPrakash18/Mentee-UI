@@ -11,7 +11,7 @@ import {
 
 const HeroSection = () => {
   return (
-    <div className="bg-black text-white font-sans pt-20">
+    <div className="text-white bg-black font-sans pt-20">
       {/* Hero Section */}
       <section className="text-center py-16 px-4">
         <h1 className="text-4xl sm:text-3xl md:text-4xl font-extrabold text-center leading-tight">

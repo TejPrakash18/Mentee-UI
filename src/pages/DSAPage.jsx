@@ -180,7 +180,7 @@ const DSAPage = () => {
 
                         {q.difficulty && (
                           <span
-                            className={`text-xs font-semibold px-2 py-0.5 rounded-full whitespace-nowrap ${getBadgeColor(
+                            className={`text-xs font-semibold px-2 py-0.5 rounded-full whitespace-nowrap capitalize ${getBadgeColor(
                               q.difficulty
                             )}`}
                           >

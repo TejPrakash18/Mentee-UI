@@ -22,11 +22,11 @@ const ProgressBar = () => {
     },
     blogs: {
       technical: 0,
-      core: 0,
-      projects: 0,
+      fundamental: 0,
+      aptitude: 0,
       solvedTechnical: 0,
-      solvedCore: 0,
-      solvedProjects: 0,
+      solvedFundamental: 0,
+      solvedAptitude: 0,
     },
   });
 
@@ -49,19 +49,23 @@ const ProgressBar = () => {
           fetchDSACompletedCountByDifficulty(username),
         ]);
 
-        const normalizedBlogs = Object.fromEntries(
-          Object.entries(blogCategoryCount || {}).map(([key, value]) => [
-            key.toLowerCase().replace(/\s+/g, ""),
-            value,
-          ])
-        );
+        // Alias map to normalize backend keys
+        const aliasMap = {
+          corefundamental: "fundamental",
+          projectsblog: "aptitude",
+          technical: "technical",
+        };
 
-        const normalizedCompletedBlogs = Object.fromEntries(
-          Object.entries(completedBlogCountByCategory || {}).map(([key, value]) => [
-            key.toLowerCase().replace(/\s+/g, ""),
-            value,
-          ])
-        );
+        const normalizeKeys = (obj) =>
+          Object.fromEntries(
+            Object.entries(obj || {}).map(([key, value]) => {
+              const normalizedKey = key.toLowerCase().replace(/\s+/g, "");
+              return [aliasMap[normalizedKey] || normalizedKey, value];
+            })
+          );
+
+        const normalizedBlogs = normalizeKeys(blogCategoryCount);
+        const normalizedCompletedBlogs = normalizeKeys(completedBlogCountByCategory);
 
         const normalizedDSA = Object.fromEntries(
           Object.entries(dsaCategoryCount || {}).map(([key, value]) => [
@@ -81,11 +85,11 @@ const ProgressBar = () => {
           },
           blogs: {
             technical: normalizedBlogs.technical || 0,
-            core: normalizedBlogs.corefundamental || 0,
-            projects: normalizedBlogs.projectsblog || 0,
+            fundamental: normalizedBlogs.fundamental || 0,
+            aptitude: normalizedBlogs.aptitude || 0,
             solvedTechnical: normalizedCompletedBlogs.technical || 0,
-            solvedCore: normalizedCompletedBlogs.corefundamental || 0,
-            solvedProjects: normalizedCompletedBlogs.projectsblog || 0,
+            solvedFundamental: normalizedCompletedBlogs.fundamental || 0,
+            solvedAptitude: normalizedCompletedBlogs.aptitude || 0,
           },
         });
       } catch (error) {
@@ -108,15 +112,15 @@ const ProgressBar = () => {
 
   const {
     technical,
-    core,
-    projects,
+    fundamental,
+    aptitude,
     solvedTechnical,
-    solvedCore,
-    solvedProjects,
+    solvedFundamental,
+    solvedAptitude,
   } = progress.blogs;
 
-  const blogsTotal = technical + core + projects;
-  const blogsSolved = solvedTechnical + solvedCore + solvedProjects;
+  const blogsTotal = technical + fundamental + aptitude;
+  const blogsSolved = solvedTechnical + solvedFundamental + solvedAptitude;
 
   return (
     <section className="bg-[#1d1c20]/60 backdrop-blur rounded-2xl p-6 lg:p-8 shadow-xl text-white min-h-[32rem] flex flex-col space-y-8">
@@ -164,24 +168,23 @@ const ProgressBar = () => {
             },
             {
               label: "Fundamental",
-              done: solvedCore,
-              total: core,
+              done: solvedFundamental,
+              total: fundamental,
               color: "bg-pink-400",
               track: "bg-pink-900",
             },
             {
-              label: "Projects",
-              done: solvedProjects,
-              total: projects,
+              label: "Aptitude",
+              done: solvedAptitude,
+              total: aptitude,
               color: "bg-purple-400",
               track: "bg-purple-900",
             },
           ]}
         />
       </div>
-<UserActivityHeatmap username={username}/>
 
-
+      <UserActivityHeatmap username={username} />
 
       <footer className="text-xs text-gray-500 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between pt-4 border-t border-[#2c2c2f]">
         <span>© 2025 Tej · Smart LMS</span>

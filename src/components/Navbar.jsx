@@ -79,7 +79,7 @@ const Navbar = () => {
   return (
     <nav
       role="navigation"
-      className="bg-[#1d1c20] text-white rounded-md px-4 sm:px-6 lg:px-10 py-3 flex items-center justify-between mx-2 sm:mx-6 lg:mx-20 relative z-30 "
+      className="bg-[#1d1c20] text-white rounded-md px-4 sm:px-6 lg:px-10 py-3 flex items-center justify-between mx-2 sm:mx-6 lg:mx-15 relative z-30"
     >
       <Link to="/" className="flex items-center gap-2">
         <img src={logo} alt="Mentee logo" className="w-10 h-10 rounded-full" />

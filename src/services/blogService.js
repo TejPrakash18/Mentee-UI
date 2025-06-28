@@ -4,7 +4,7 @@ import api from './api';
 export const getAllBlogs = () => api.get('/blogs');
 
 export const getBlogById = (id) => 
-  api.get(`/blogs/${id}`); // ✅ Fixed
+  api.get(`/blogs/${id}`);  
 
 export const getBlogsByCategory = (category) =>
   api.get(`/blogs/category?category=${encodeURIComponent(category)}`);
