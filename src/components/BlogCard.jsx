@@ -8,23 +8,21 @@ const BlogCard = ({ title, progress = 0 }) => {
       {/* Title */}
       <h4 className="text-xl font-semibold mb-6 line-clamp-2">{title}</h4>
 
-      {/* Progress + Info */}
-      {progress !== null && typeof progress === 'number' && (
-        <>
-          <div className="flex justify-between text-sm text-gray-400 mb-1">
-            <span>Completion:</span>
-            <span>{progress}%</span>
-          </div>
+      {/* Progress Status */}
 
-          <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden mb-6">
-            <div
-              className={`h-full transition-all duration-300 ${
-                progress === 100 ? "bg-green-500" : "bg-indigo-400"
-              }`}
-              style={{ width: `${Math.min(progress, 100)}%` }}
-            />
-          </div>
-        </>
+      {progress !== null && typeof progress === "number" && (
+        <div className="text-sm text-gray-300 mb-4 flex justify-between items-center">
+          <span className="text-gray-500">Status</span>
+          <span
+            className={`px-2 py-1 rounded-md text-xs font-semibold ${
+              progress === 100
+                ? "bg-green-600 text-white"
+                : "bg-yellow-600 text-white"
+            }`}
+          >
+            {progress === 100 ? "Done" : "Pending"}
+          </span>
+        </div>
       )}
 
       {/* CTA Button */}

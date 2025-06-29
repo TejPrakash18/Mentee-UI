@@ -23,7 +23,6 @@ import NotFoundPage from "./pages/NotFoundPage";
 import DashboardPage from "./pages/UserDashboard";
 import DSADetailPage from "./pages/DSADetailPage";
 
-
 function App() {
   return (
     <>
@@ -37,9 +36,13 @@ function App() {
             minHeight: "40px",
             padding: "14px",
             fontSize: "14px",
+            backgroundColor: "#1f1f1f", // dark toast
+            color: "#f0f0f0", // light text
+            border: "1px solid #333",
           },
         }}
       />
+
       <div className="min-h-screen bg-black pt-6">
         {/* Define the Routes for different components */}
         <Routes>
@@ -51,11 +54,11 @@ function App() {
           <Route path="/compiler" element={<CompilerPage />} />
           <Route path="/dsa" element={<DSAPage />} />
           <Route path="/dsa/question/:id" element={<DSADetailPage />} />
-          
+
           {/* 🛠 Handle invalid DSA paths */}
           <Route path="/blogs" element={<BlogPage />} />
           <Route path="/blogs/:id" element={<BlogDetailPage />} />
-          
+
           {/* 🛠 Handle invalid project paths */}
           <Route
             path="/profile"

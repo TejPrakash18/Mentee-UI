@@ -404,7 +404,9 @@ const DSADetailPage = () => {
                   <>
                     {outputText.includes("Wrong Answer") ? (
                       <div className="space-y-2">
-                        <p className="text-red-6  00 font-bold">Wrong Answer</p>
+                        <p className="text-red-600 font-semibold">
+                          Wrong Answer
+                        </p>
                         <pre className="whitespace-pre-wrap text-white">
                           {outputText.replace("Wrong Answer", "").trim()}
                         </pre>

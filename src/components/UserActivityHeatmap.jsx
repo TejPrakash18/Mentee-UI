@@ -1,8 +1,6 @@
-// src/components/UserActivityHeatmap.jsx
 import { useEffect, useState } from "react";
 import { getUserActivityStats } from "../services/userActivityService";
 import { format, addDays, getDay, parseISO, getYear } from "date-fns";
-import { motion } from "framer-motion";
 
 const getColor = (count) => {
   if (count >= 5) return "bg-green-500 hover:bg-green-600";
@@ -73,7 +71,7 @@ const UserActivityHeatmap = ({ username }) => {
 
         setTotal(yearlyTotal);
       } catch (error) {
-        console.error(" Failed to fetch activity stats", error);
+        console.error("Failed to fetch activity stats", error);
       } finally {
         setLoading(false);
       }
@@ -110,16 +108,10 @@ const UserActivityHeatmap = ({ username }) => {
       <div key={weekIndex} className="flex flex-col gap-[2px]">
         {week.map((day, dayIndex) =>
           day ? (
-            <motion.div
+            <div
               key={dayIndex}
               className={`rounded-sm ${boxSize} ${getColor(day.count)} cursor-pointer`}
               title={`${day.count} solved on ${format(parseISO(day.date), "dd MMM yyyy")}`}
-              initial={{ scale: 0.6, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{
-                duration: 0.3,
-                delay: (weekIndex * 7 + dayIndex) * 0.004,
-              }}
             />
           ) : (
             <div key={dayIndex} className={`rounded-sm bg-transparent ${boxSize}`} />
