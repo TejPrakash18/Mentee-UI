@@ -430,7 +430,7 @@ const DSADetailPage = () => {
 
       {/* Floating Button */}
       <button
-        className="fixed bottom-6 right-6 z-50  bg-[#2c2c2e] hover:bg-[#3c3c3e] text-white p-4 rounded-full shadow-lg"
+        className="fixed bottom-6 right-6 z-50 bg-[#2c2c2e] hover:bg-[#3c3c3e] text-white p-4 rounded-full shadow-lg"
         onClick={() => setShowDSASidebar(true)}
       >
         <HiMiniBarsArrowUp size={20} />
@@ -438,47 +438,60 @@ const DSADetailPage = () => {
 
       {/* DSA Sidebar */}
       {showDSASidebar && (
-        <div className="fixed top-0 right-0 z-50 w-80 max-w-full h-full bg-[#1e1e22] p-4 overflow-y-auto shadow-xl border-l border-gray-700">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl text-orange-400 font">All DSA Questions</h2>
+        <div className="fixed top-0 right-0 z-50 w-80 max-w-full h-full bg-[#1e1e22] shadow-xl border-l border-gray-700 flex flex-col">
+          {/* Clean Fixed Header */}
+          <div className="sticky top-0 flex justify-between items-center px-5 py-3 border-b border-gray-700 bg-[#1e1e22] z-10 shadow-md">
+            <h2 className="text-lg text-orange-400 font-semibold tracking-wide">
+              All DSA Questions
+            </h2>
             <button
               onClick={() => setShowDSASidebar(false)}
-              className="text-orange-400 hover:text-red-500 text-xl"
+              className="p-2 hover:bg-red-500/20 rounded-md transition duration-150"
+              title="Close"
             >
-              <ImCross size={15} />
+              <ImCross
+                className="text-red-400 hover:text-red-500 text-sm"
+                size={14}
+              />
             </button>
           </div>
-          {dsaList.length > 0 ? (
-            <ul className="space-y-2">
-              {dsaList.map((q) => (
-                <li key={q._id}>
-                  <button
-                    onClick={() => {
-                      setShowDSASidebar(false);
-                      navigate(`/dsa/question/${q.id}`);
-                    }}
-                    className="block w-full text-left bg-[#2a2a2d] hover:bg-[#3a3a3d] text-white p-2 rounded"
-                  >
-                    <div className="flex justify-between items-center capitalize">
-                      <span>{q.title}</span>
-                      <span
-                        className={`text-xs ${getDifficultyColor(
-                          q.difficulty
-                        )}`}
-                      >
-                        {q.difficulty}
-                      </span>
-                    </div>
-                    {completedTitles.includes(q.title) && (
-                      <span className="text-green-400 text-sm">Completed</span>
-                    )}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-gray-400">No questions available.</p>
-          )}
+
+          {/* Scrollable Questions */}
+          <div className="flex-1 overflow-y-auto px-4 py-3 space-y-2">
+            {dsaList.length > 0 ? (
+              <ul className="space-y-2">
+                {dsaList.map((q) => (
+                  <li key={q._id}>
+                    <button
+                      onClick={() => {
+                        setShowDSASidebar(false);
+                        navigate(`/dsa/question/${q.id}`);
+                      }}
+                      className="block w-full text-left bg-[#2a2a2d] hover:bg-[#3a3a3d] text-white p-3 rounded-md transition duration-150"
+                    >
+                      <div className="flex justify-between items-center capitalize">
+                        <span className="truncate">{q.title}</span>
+                        <span
+                          className={`text-xs font-medium ${getDifficultyColor(
+                            q.difficulty
+                          )}`}
+                        >
+                          {q.difficulty}
+                        </span>
+                      </div>
+                      {completedTitles.includes(q.title) && (
+                        <span className="text-green-400 text-xs">
+                          ✓ Completed
+                        </span>
+                      )}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-400 text-sm">No questions available.</p>
+            )}
+          </div>
         </div>
       )}
     </>

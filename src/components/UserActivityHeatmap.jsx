@@ -35,8 +35,10 @@ const generateYearlyGrid = (year, dataMap) => {
     } else {
       grid[week][day] = null;
     }
+
     currentDate = addDays(currentDate, 1);
   }
+
   return grid;
 };
 
@@ -47,7 +49,7 @@ const UserActivityHeatmap = ({ username }) => {
   const [streaks, setStreaks] = useState({ current: 0, longest: 0 });
 
   const currentYear = new Date().getFullYear();
-  const boxSize = "w-[clamp(7px,1.4vw,13px)] h-[clamp(8px,1.6vw,14px)]";
+  const boxSize = "w-[clamp(8px,1.6vw,12px)] h-[clamp(8px,1.6vw,11.5px)]";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,7 +67,7 @@ const UserActivityHeatmap = ({ username }) => {
             if (format(parseISO(date), "yyyy") === `${currentYear}`) {
               return acc + val;
             }
-          } catch (err) {}
+          } catch (_) {}
           return acc;
         }, 0);
 
@@ -100,7 +102,7 @@ const UserActivityHeatmap = ({ username }) => {
       }
     });
 
-    return <div className="flex gap-[2px] pl-[28px] mb-1">{labels}</div>;
+    return <div className="flex gap-[1.5px] pl-[28px] mb-1">{labels}</div>;
   };
 
   const renderGrid = (weeks) =>
@@ -110,22 +112,41 @@ const UserActivityHeatmap = ({ username }) => {
           day ? (
             <div
               key={dayIndex}
-              className={`rounded-sm ${boxSize} ${getColor(day.count)} cursor-pointer`}
+              className={`rounded-[2px] ${boxSize} ${getColor(day.count)} cursor-pointer border-none`}
               title={`${day.count} solved on ${format(parseISO(day.date), "dd MMM yyyy")}`}
             />
           ) : (
-            <div key={dayIndex} className={`rounded-sm bg-transparent ${boxSize}`} />
+            <div key={dayIndex} className={`rounded-[2px] bg-transparent ${boxSize}`} />
           )
         )}
       </div>
     ));
 
   return (
-    <div className="bg-[#1e1e22] text-white rounded-xl p-6 shadow-lg">
+    <div className="bg-[#1e1e22] text-white rounded-xl p-4 sm:p-6 shadow-lg w-full">
+      <style>{`
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+          height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background-color: #22c55e; /* green-500 */
+          border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background-color: #2a2a2f;
+          border-radius: 8px;
+        }
+        .custom-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: #22c55e #2a2a2f;
+        }
+      `}</style>
+
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
         <h2 className="text-lg font-semibold">
           {total} submissions in {currentYear}
-          <span className="ml-3 text-green-400 text-sm font-normal">
+          <span className="ml-3 text-gray-400 text-sm font-normal">
             (Current streak: {streaks.current})
           </span>
         </h2>
@@ -139,16 +160,16 @@ const UserActivityHeatmap = ({ username }) => {
 
       <div className="flex items-center gap-2 text-xs text-gray-400 mb-4">
         <span>Less</span>
-        <div className={`rounded-sm bg-green-300 ${boxSize}`} />
-        <div className={`rounded-sm bg-green-400 ${boxSize}`} />
-        <div className={`rounded-sm bg-green-500 ${boxSize}`} />
+        <div className={`rounded-[2px] bg-green-300 ${boxSize}`} />
+        <div className={`rounded-[2px] bg-green-400 ${boxSize}`} />
+        <div className={`rounded-[2px] bg-green-500 ${boxSize}`} />
         <span>More</span>
       </div>
 
-      <div className="flex flex-col gap-2">
-        {renderMonthLabels(fullGrid)}
-        <div className="overflow-x-auto custom-scroll max-w-full">
-          <div className="flex gap-[2px] w-max">
+      <div className="w-full overflow-x-auto custom-scrollbar">
+        <div className="min-w-max">
+          {renderMonthLabels(fullGrid)}
+          <div className="flex gap-[2px] pt-1">
             {!loading && renderGrid(fullGrid)}
           </div>
         </div>

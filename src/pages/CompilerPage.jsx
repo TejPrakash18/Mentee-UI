@@ -5,6 +5,8 @@ import Editor from "@monaco-editor/react";
 import axios from "axios";
 import { FaJava, FaJs, FaPython } from "react-icons/fa";
 import { SiCplusplus, SiC } from "react-icons/si";
+import { FaCloudUploadAlt, FaPlay } from "react-icons/fa";
+
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { toast } from "sonner";
@@ -208,7 +210,7 @@ const CompilerPage = () => {
       <Navbar />
       <div className="min-h-[90vh] bg-[#0f1117] text-white rounded mt-3 mx-4 lg:mx-20 flex flex-col shadow-lg overflow-hidden">
         {/* Compiler Switch Tabs */}
-        <div className="flex flex-wrap justify-start bg-[#161821] px-4 py-2 gap-2 items-center border-b border-gray-700 overflow-x-auto">
+        <div className="flex flex-wrap justify-start bg-[#161821] px-3 py-2 gap-2 items-center border-b border-gray-700 overflow-x-auto">
           {compilers.map((c) => (
             <button
               key={c.id}
@@ -217,17 +219,19 @@ const CompilerPage = () => {
                 setCode(defaultCodeMap[c.id]);
                 setOutputText("");
               }}
-              className={`flex items-center gap-1 px-3 py-1 rounded text-sm transition-all duration-200 whitespace-nowrap ${
-                selectedCompiler === c.id ? "bg-blue-600" : "hover:bg-blue-500"
+              className={`flex items-center gap-2 px-3 py-2 rounded-md border transition-all duration-200 ${
+                selectedCompiler === c.id
+                  ? "bg-blue-600 border-blue-600 text-white"
+                  : "bg-[#1e1e2e] border-gray-600 text-gray-300 hover:bg-blue-500 hover:text-white"
               }`}
               title={c.name}
             >
-              <span className="text-lg">{c.icon}</span>
-              {c.name}
+              <span className="text-base sm:text-lg">{c.icon}</span>
+              <span className="text-xs sm:text-sm font-medium">{c.name}</span>
             </button>
           ))}
         </div>
-        {/* Main Section */}
+
         {/* Main Section */}
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden p-3 gap-3 w-full h-full overflow-x-hidden">
           {/* Editor */}
@@ -238,16 +242,23 @@ const CompilerPage = () => {
                 {currentCompiler?.name} Editor
               </h2>
               <div className="flex gap-2 w-full sm:w-auto justify-center">
+                {/* Save Button */}
                 <button
                   onClick={handleSave}
-                  className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-sm font-medium w-[100px]"
+                  title="Save your code"
+                  className="flex items-center gap-2 px-3 py-1.5 bg-transparent border border-green-500 text-green-500 hover:bg-green-500 hover:text-white rounded-md text-sm font-medium transition-all"
                 >
+                  <FaCloudUploadAlt className="text-lg" />
                   Save
                 </button>
+
+                {/* Run Button */}
                 <button
                   onClick={handleRun}
-                  className="bg-orange-600 hover:bg-orange-700 px-3 py-1 rounded text-sm font-medium w-[100px]"
+                  title="Run your code"
+                  className="flex items-center gap-2 px-3 py-1.5 bg-transparent border border-gray-500 text-gray-300 hover:bg-gray-500 hover:text-white rounded-md text-sm font-medium transition-all"
                 >
+                  <FaPlay className="text-sm" />
                   {isLoading ? "Running..." : "Run"}
                 </button>
               </div>

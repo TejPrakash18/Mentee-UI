@@ -39,7 +39,7 @@ const SidebarProfile = () => {
   if (!profile) return <p className="text-white p-5">Loading…</p>;
 
   return (
-    <aside className="bg-[#1d1c20]/60 p-6 rounded-2xl text-white shadow-xl flex flex-col space-y-6 min-h-[32rem]">
+    <aside className=" p-6 rounded-2xl text-white shadow-xl flex flex-col space-y-6 min-h-[32rem]">
       {/* header */}
       <div className="flex items-center gap-4">
         <img

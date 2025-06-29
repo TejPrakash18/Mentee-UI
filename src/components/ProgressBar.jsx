@@ -123,7 +123,7 @@ const ProgressBar = () => {
   const blogsSolved = solvedTechnical + solvedFundamental + solvedAptitude;
 
   return (
-    <section className="bg-[#1d1c20]/60 backdrop-blur rounded-2xl p-6 lg:p-8 shadow-xl text-white min-h-[32rem] flex flex-col space-y-8">
+    <section className=" backdrop-blur rounded-2xl p-6 lg:p-8 shadow-xl text-white min-h-[32rem] flex flex-col space-y-8">
       <h2 className="text-xl font-bold text-sky-400">Learning Progress</h2>
 
       <div className="grid gap-8 md:grid-cols-2">

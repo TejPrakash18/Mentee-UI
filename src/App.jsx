@@ -13,7 +13,6 @@ import RegisterPage from "./pages/RegisterPage";
 import BlogPage from "./pages/BlogPage";
 import DSAPage from "./pages/DSAPage";
 import CompilerPage from "./pages/CompilerPage";
-// import UserDashboard from "./pages/UserDashboard"
 import BlogDetailPage from "./pages/BlogDetailPage";
 import PrivateRoute from "./routes/PrivateRoute";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -27,7 +26,7 @@ function App() {
   return (
     <>
       <Toaster
-        position="bottom-left"
+        position="top-right"
         duration={2000}
         closeButton
         toastOptions={{
@@ -55,11 +54,11 @@ function App() {
           <Route path="/dsa" element={<DSAPage />} />
           <Route path="/dsa/question/:id" element={<DSADetailPage />} />
 
-          {/* 🛠 Handle invalid DSA paths */}
+          {/*  Handle invalid DSA paths */}
           <Route path="/blogs" element={<BlogPage />} />
           <Route path="/blogs/:id" element={<BlogDetailPage />} />
 
-          {/* 🛠 Handle invalid project paths */}
+          {/*  Handle invalid project paths */}
           <Route
             path="/profile"
             element={

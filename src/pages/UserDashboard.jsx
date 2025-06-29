@@ -1,6 +1,7 @@
 import SidebarProfile from "../components/SidebarProfile";
 import ProgressBar from "../components/ProgressBar";
 import Navbar from "../components/Navbar";
+import UserActivityHeatmap from "../components/UserActivityHeatmap"; // include this if you want heatmap here
 
 const DashboardPage = () => {
   const username = localStorage.getItem("username") || "User";
@@ -8,22 +9,14 @@ const DashboardPage = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen px-4 lg:px-16 py-10">
-        {/* <div className="text-center lg:text-left mb-10">
-          <h2 className="text-2xl md:text-3xl font-semibold mb-2 text-white">
-            Welcome, <span className="text-orange-500 capitalize font-mono">{username}</span>
-          </h2>
-          <p className="text-gray-400 text-base">
-            Track your progress, showcase your skills, and grow every day.
-          </p>
-        </div> */}
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          <div className="lg:col-span-1">
+      <div className="bg-[#1d1c20]/60 min-h-screen border-2 rounded-2xl mx-4 sm:mx-8 lg:mx-16 mt-5 px-4 sm:px-6 lg:px-10 py-6 sm:py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-start">
+          <div className="lg:col-span-1 w-full">
             <SidebarProfile />
           </div>
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 w-full flex flex-col gap-6">
             <ProgressBar />
+            
           </div>
         </div>
       </div>

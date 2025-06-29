@@ -10,7 +10,7 @@ const NotFoundPage = () => {
   return (
     <>
       <Navbar />
-      <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 to-black px-4">
+      <div className="fixed inset-0 flex items-center justify-center bg-black px-4">
         <div className="text-center max-w-md">
           {/* Big 404 icon */}
           <TbError404 className="w-32 h-32 md:w-40 md:h-40 text-purple-500 mx-auto" />
@@ -22,7 +22,7 @@ const NotFoundPage = () => {
 
           {/* Description */}
           <p className="mt-4 text-lg text-gray-300">
-            This page doesn't exist or is under the maintenance. Our team is on
+            This page doesn't exist or is under the maintenance. Our team is work on
             it -{" "}
             <span className="text-amber-300 font-semibold hover:text-blue-800 text-xl">
               please check back soon.
