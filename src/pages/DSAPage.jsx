@@ -3,20 +3,20 @@ import Navbar from "../components/Navbar";
 import Progress from "../components/ProgressTracker";
 import { getAllDSA, getCompletedQuestions } from "../services/dsaService";
 import { Link } from "react-router-dom";
-import "../App.css"; // ⬅️ Import your custom CSS
+import "../App.css";
 
 const getBadgeColor = (level) => {
   switch (level.toLowerCase()) {
     case "basic":
-      return "bg-green-600 text-white";
+      return "text-green-600";
     case "easy":
-      return "bg-yellow-400 text-black";
+      return "text-yellow-400";
     case "medium":
-      return "bg-orange-500 text-white";
+      return "text-orange-500";
     case "hard":
-      return "bg-red-600 text-white";
+      return "text-red-600";
     default:
-      return "bg-gray-500 text-white";
+      return "text-gray-500";
   }
 };
 
@@ -52,7 +52,7 @@ const DSAPage = () => {
 
         setProgressState(
           groupedArr.map((cat) => ({
-            open: false,
+            open: false, // by default collapsed
             checked: cat.questions.map((q) => completedTitles.has(q.title)),
           }))
         );
@@ -66,12 +66,15 @@ const DSAPage = () => {
     fetchData();
   }, [username]);
 
-  const toggleOpen = (index) =>
+  // Collapse others and expand only selected
+  const toggleOpen = (index) => {
     setProgressState((prev) =>
-      prev.map((item, i) =>
-        i === index ? { ...item, open: !item.open } : item
-      )
+      prev.map((item, i) => ({
+        ...item,
+        open: i === index ? !item.open : false,
+      }))
     );
+  };
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value.toLowerCase());
@@ -127,24 +130,38 @@ const DSAPage = () => {
                 key={catIdx}
                 className="bg-neutral-900/80 backdrop-blur p-4 sm:p-6 rounded-xl shadow-lg shadow-black/40"
               >
-                {/* Header */}
+                {/* Title + Progress + Toggle Button */}
                 <button
                   onClick={() => toggleOpen(catIdx)}
-                  className="w-full flex justify-between items-center text-left focus:outline-none"
+                  className="w-full flex items-center justify-between text-left focus:outline-none"
                 >
-                  <span className="text-lg sm:text-xl font-semibold capitalize">
+                  {/* Category Name */}
+                  <div className="text-lg sm:text-xl font-semibold capitalize whitespace-nowrap overflow-hidden text-ellipsis pr-4">
                     {cat.name}
-                  </span>
-                  <span className="text-sm text-gray-400">
-                    {completed} / {total}
-                  </span>
+                  </div>
+
+                  {/* Progress Info */}
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3 w-auto sm:w-1/2 text-right">
+                    {/* Progress bar - hidden on small screens */}
+                    <div className="hidden sm:block w-full sm:w-[70%]">
+                      <Progress value={pct} className="h-4 sm:h-5" />
+                    </div>
+
+                    {/* Count */}
+                    <span className="text-base text-gray-400 block mt-1 sm:mt-0 whitespace-nowrap">
+                      {completed} / {total} completed
+                    </span>
+                  </div>
                 </button>
 
-                {/* Progress Bar */}
-                <Progress
-                  value={pct}
-                  className="h-2 sm:h-3 my-3 transition-all duration-300"
-                />
+                {/* Table Headers */}
+                {progressState[catIdx].open && (
+                  <div className="flex justify-between px-1 mt-6 mb-1 text-sm font-medium text-gray-400">
+                    <div className="w-6">Completed</div>
+                    <div className="flex-1 pl-20">Problem</div>
+                    <div className="w-24 text-right">Difficulty</div>
+                  </div>
+                )}
 
                 {/* Question List */}
                 <ul
@@ -163,24 +180,30 @@ const DSAPage = () => {
                         key={q.id}
                         className="flex justify-between items-start gap-2 py-2 border-b border-white/10 last:border-none"
                       >
-                        <div className="flex-1 flex items-start gap-2 overflow-hidden">
+                        {/* Checkbox */}
+                        <div className="w-6 pt-1 pl-5">
                           <input
                             type="checkbox"
                             checked={checked[realIndex] || false}
                             readOnly
-                            className="accent-green-500 mt-1"
+                            className="accent-green-500"
                           />
+                        </div>
+
+                        {/* Title */}
+                        <div className="flex-1 pl-20 overflow-hidden">
                           <Link
                             to={`/dsa/question/${q.id}`}
-                            className="text-blue-400 hover:underline truncate max-w-[80%] sm:max-w-[85%]"
+                            className="text-blue-400 truncate block max-w-[80%] sm:max-w-[90%]"
                           >
                             {q.title}
                           </Link>
                         </div>
 
+                        {/* Difficulty */}
                         {q.difficulty && (
                           <span
-                            className={`text-xs font-semibold px-2 py-0.5 rounded-full whitespace-nowrap capitalize ${getBadgeColor(
+                            className={`text-sm font-semibold px-2 py-0.5 whitespace-nowrap capitalize ${getBadgeColor(
                               q.difficulty
                             )}`}
                           >

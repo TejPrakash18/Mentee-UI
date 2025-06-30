@@ -1,6 +1,55 @@
+import React, { useState } from "react";
 import FAQ from "../components/FAQ";
 
 const FAQPage = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const handleToggle = (index) => {
+    setOpenIndex((prev) => (prev === index ? null : index));
+  };
+
+  const faqData = [
+    {
+      question: "How should I begin preparing with the DSA Sheet?",
+      answer:
+        "Start with the basics — arrays, strings, and recursion. The sheet is designed to build your skills progressively. Don’t rush; focus on understanding patterns and solving one or two problems consistently every day.",
+    },
+    {
+      question:
+        "Are the listed projects beginner-friendly and industry-relevant?",
+      answer:
+        "Yes! All projects are designed with learning progression in mind. They start simple and evolve into real-world use cases — helping you build a strong portfolio for internships or full-time roles.",
+    },
+    {
+      question: "What resources do you offer for interview preparation?",
+      answer:
+        "We offer handpicked DSA problems, behavioral interview guidance, resume-building tips, mock interview sets, and company-specific prep tracks to give you a complete prep experience.",
+    },
+    {
+      question:
+        "How can I manage college academics along with placement preparation?",
+      answer:
+        "Consistency over intensity. Spend just 1 focused hour daily on DSA or concepts, and increase time on weekends. Use planners, prioritize weak areas, and follow structured prep content to avoid burnout.",
+    },
+    {
+      question: "Is it too late to start interview preparation now?",
+      answer:
+        "Not at all. It’s never too late. With a focused roadmap, discipline, and the right guidance, you can go from beginner to job-ready in a few months. Every expert was once a beginner.",
+    },
+    {
+      question:
+        "How do I stay consistent and avoid burnout during preparation?",
+      answer:
+        "Break your goals into small, achievable tasks. Follow the '1-1-1 rule' — 1 DSA problem, 1 concept, 1 project task per day. Track your progress and take short breaks to recharge. Consistency beats intensity.",
+    },
+    {
+      question:
+        "What if I struggle to understand complex topics like system design or DP?",
+      answer:
+        "That’s completely normal. Start with simpler examples, visualize the problem, and build intuition slowly. Use real-world analogies and break the topic into smaller pieces. Revisit the concepts after practicing — mastery comes with time and repetition.",
+    },
+  ];
+
   return (
     <>
       {/* FAQ Section */}
@@ -10,26 +59,15 @@ const FAQPage = () => {
         </h2>
 
         <div className="max-w-4xl mx-auto space-y-6">
-          <FAQ
-            question="How do I start with the DSA sheet?"
-            answer="Begin with the foundational topics and practice consistently. Our DSA sheet is structured to gradually build your problem-solving skills."
-          />
-          <FAQ
-            question="Are the projects suitable for beginners?"
-            answer="Yes! Projects range from beginner to advanced levels, each with detailed instructions to help you succeed."
-          />
-          <FAQ
-            question="Do you offer interview preparation materials?"
-            answer="Absolutely! We provide curated questions, mock interviews, and strategies to help you confidently tackle technical interviews."
-          />
-          <FAQ
-            question="How do I balance college academics with interview prep?"
-            answer="Time management is key. Start with small, daily targets — like 30 minutes of DSA or 1 problem a day. Use weekends or breaks to focus more on core subjects or mock interviews. Our flexible content and daily task scheduler helps you prep at your pace."
-          />
-          <FAQ
-            question="Is it okay to start interview prep from scratch if I have less experience?"
-            answer="Absolutely! Everyone starts somewhere. We’ve curated beginner-friendly resources, practice problems, and roadmaps to help you gradually build your skills from basic to advanced."
-          />
+          {faqData.map((faq, index) => (
+            <FAQ
+              key={index}
+              question={faq.question}
+              answer={faq.answer}
+              isOpen={openIndex === index}
+              onClick={() => handleToggle(index)}
+            />
+          ))}
         </div>
       </section>
     </>

@@ -136,7 +136,12 @@ const DSADetailPage = () => {
     if (cleanedOutput === expectedOutput) {
       try {
         await markDSAComplete(username, question.title);
-        alert("Question marked as complete!");
+        setOutputText(
+          `Correct Answer \n\nYour Output:\n${cleanedOutput}\n\nExpected Output:\n${expectedOutput}`
+        );
+        setTimeout(() => {
+          alert("Question submitted successfully!");
+        }, 1000);
         setIsCompleted(true);
         await logUserActivity(username);
       } catch {
@@ -405,15 +410,28 @@ const DSADetailPage = () => {
                     {outputText.includes("Wrong Answer") ? (
                       <div className="space-y-2">
                         <p className="text-red-600 font-semibold">
+                          {" "}
                           Wrong Answer
                         </p>
                         <pre className="whitespace-pre-wrap text-white">
                           {outputText.replace("Wrong Answer", "").trim()}
                         </pre>
                       </div>
+                    ) : outputText.includes("Correct Answer") ? (
+                      <div className="space-y-2">
+                        <p className="text-green-600 font-semibold">
+                          Correct Answer
+                        </p>
+                        <pre className="whitespace-pre-wrap text-white">
+                          {outputText.replace("Correct Answer", "").trim()}
+                        </pre>
+                      </div>
                     ) : (
-                      <>{outputText || "Your output will appear here..."}</>
+                      <p className="text-gray-400">
+                        {outputText || "Your output will appear here..."}
+                      </p>
                     )}
+
                     {(execTime || memoryUsage) && (
                       <div className="mt-4 text-green-400 text-xs flex justify-end gap-4">
                         {execTime && <span>⏱ {execTime}</span>}

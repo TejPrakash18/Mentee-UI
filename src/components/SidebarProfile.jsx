@@ -1,22 +1,21 @@
-// src/components/SidebarProfile.jsx
 import { useEffect, useState } from "react";
 import { Pencil, X, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import userService from "../services/userService";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { MdEmail, MdSchool, MdLocationOn, MdBusiness } from "react-icons/md";
 import tejAvatar from "/profile5.png";
-
 
 /* ============= Profile Card ============= */
 const SidebarProfile = () => {
-  const [profile, setProfile]     = useState(null);
+  const [profile, setProfile] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  /* fetch profile + avatar once */
   useEffect(() => {
     (async () => {
       const username = localStorage.getItem("username");
-      const data     = await userService.getProfile();
+      const data = await userService.getProfile();
       setProfile(data);
       if (username) {
         const avatar = await userService.getAvatar(username);
@@ -25,21 +24,27 @@ const SidebarProfile = () => {
     })();
   }, []);
 
-  /* toggle a skill (case-insensitive, trimmed) */
   const toggleSkill = (skill) =>
     setProfile((prev) => {
       if (!skill) return prev;
-      const s      = skill.trim();
-      const exists = (prev.skills || []).some((x) => x.toLowerCase() === s.toLowerCase());
+      const s = skill.trim();
+      const exists = (prev.skills || []).some(
+        (x) => x.toLowerCase() === s.toLowerCase()
+      );
       return exists
-        ? { ...prev, skills: prev.skills.filter((x) => x.toLowerCase() !== s.toLowerCase()) }
+        ? {
+            ...prev,
+            skills: prev.skills.filter(
+              (x) => x.toLowerCase() !== s.toLowerCase()
+            ),
+          }
         : { ...prev, skills: [...(prev.skills || []), s] };
     });
 
   if (!profile) return <p className="text-white p-5">Loading…</p>;
 
   return (
-    <aside className=" p-6 rounded-2xl text-white shadow-xl flex flex-col space-y-6 min-h-[32rem]">
+    <aside className="rounded-2xl text-white shadow-xl flex flex-col space-y-6 min-h-[32rem]">
       {/* header */}
       <div className="flex items-center gap-4">
         <img
@@ -76,15 +81,53 @@ const SidebarProfile = () => {
           ))}
         </motion.div>
       </section>
+<section className="space-y-4 text-sm leading-relaxed flex-grow">
+  <h3 className="text-sky-400 font-semibold text-base border-b border-sky-800 pb-1">
+    Profile Information
+  </h3>
 
-      {/* info */}
-      <section className="space-y-1 text-sm leading-relaxed flex-grow">
-        <h3 className="text-sky-400 font-semibold">Personal Information</h3>
-        <Info label="Email" value={profile.email} />
-        <Info label="College" value={profile.college} />
-        <Info label="Education" value={profile.education} />
-        <Info label="Location" value={profile.location} />
-      </section>
+  {/* Card container */}
+  <div className="bg-[#1e293b] rounded-xl p-4 shadow-inner space-y-4">
+    {/* Personal Info */}
+    <div className="space-y-2 divide-y divide-[#334155]">
+      <Info label="Email" value={profile.email} />
+      <Info label="College" value={profile.college} />
+      <Info label="Education" value={profile.education} />
+      <Info label="Location" value={profile.location} />
+    </div>
+
+    {/* Social Links */}
+    <div className="space-y-2 pt-2 border-t border-[#334155]">
+      {profile.github && (
+        <a
+          href={profile.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 hover:bg-[#334155] transition-colors duration-200 px-4 py-2 rounded-md text-white"
+        >
+          <FaGithub className="text-lg text-white" />
+          <span className="truncate text-sky-400 font-medium">
+            {profile.github.replace(/^https?:\/\/(www\.)?github\.com\//, "")}
+          </span>
+        </a>
+      )}
+      {profile.linkedin && (
+        <a
+          href={profile.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 hover:bg-[#334155] transition-colors duration-200 px-4 py-2 rounded-md text-white"
+        >
+          <FaLinkedin className="text-lg text-sky-400" />
+          <span className="truncate text-sky-400 font-medium">
+            {profile.linkedin.replace(/^https?:\/\/(www\.)?linkedin\.com\/in\//, "")}
+          </span>
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
 
       {/* modal */}
       <AnimatePresence>
@@ -103,13 +146,29 @@ const SidebarProfile = () => {
   );
 };
 
-/* helpers */
-const Info = ({ label, value }) => (
-  <p>
-    <span className="text-gray-400">{label}: </span>
-    {value || "—"}
-  </p>
+/* helpers */ 
+const Info = ({ label, value, isLink = false }) => (
+  <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4 py-2 text-sm text-white">
+    <span className="text-gray-400 min-w-[90px]">{label}</span>
+    {value ? (
+      isLink ? (
+        <a
+          href={value}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sky-400 hover:underline text-right break-words"
+        >
+          {value.replace(/^https?:\/\/(www\.)?/, "")}
+        </a>
+      ) : (
+        <span className="text-right break-words">{value}</span>
+      )
+    ) : (
+      <span className="text-gray-500 text-right">—</span>
+    )}
+  </div>
 );
+
 
 /* modal shell */
 const ModalShell = ({ children, onClose }) => (
@@ -128,7 +187,6 @@ const ModalShell = ({ children, onClose }) => (
 const EditModal = ({ profile, setProfile, toggleSkill, onClose }) => {
   const [skillInput, setSkillInput] = useState("");
 
-  /* push new skill on Enter or button */
   const addSkill = () => {
     toggleSkill(skillInput);
     setSkillInput("");
@@ -147,7 +205,10 @@ const EditModal = ({ profile, setProfile, toggleSkill, onClose }) => {
       {/* header */}
       <div className="flex justify-between items-center bg-[#1f1f22] px-6 py-4 border-b border-[#2c2c2f]">
         <h2 className="text-xl font-semibold text-sky-400">Edit Profile</h2>
-        <button onClick={onClose} className="p-2 hover:bg-[#2a2b2e] rounded-full">
+        <button
+          onClick={onClose}
+          className="p-2 hover:bg-[#2a2b2e] rounded-full"
+        >
           <X size={20} />
         </button>
       </div>
@@ -160,22 +221,38 @@ const EditModal = ({ profile, setProfile, toggleSkill, onClose }) => {
             <Field
               label="Name"
               value={profile.name}
+              placeholder="Enter you name"
               onChange={(v) => setProfile({ ...profile, name: v })}
             />
             <Field
               label="College"
               value={profile.college}
+              placeholder="College Name"
               onChange={(v) => setProfile({ ...profile, college: v })}
             />
             <Field
               label="Education"
               value={profile.education}
+              placeholder="Enter you education"
               onChange={(v) => setProfile({ ...profile, education: v })}
             />
             <Field
               label="Location"
               value={profile.location}
+              placeholder="Add your location"
               onChange={(v) => setProfile({ ...profile, location: v })}
+            />
+            <Field
+              label="GitHub URL"
+              value={profile.github || ""}
+              placeholder="Enter your Github URL"
+              onChange={(v) => setProfile({ ...profile, github: v })}
+            />
+            <Field
+              label="LinkedIn URL"
+              value={profile.linkedin || ""}
+              placeholder="Enter your Linkedin URL"
+              onChange={(v) => setProfile({ ...profile, linkedin: v })}
             />
           </div>
 
@@ -239,7 +316,7 @@ const EditModal = ({ profile, setProfile, toggleSkill, onClose }) => {
   );
 };
 
-/* reusable small controls */
+/* reusable input control */
 const Field = ({ label, value, onChange }) => (
   <div className="space-y-1">
     <label className="text-sm text-gray-400">{label}</label>

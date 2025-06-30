@@ -87,7 +87,7 @@ const BlogDetailPage = () => {
     setExpandedSections((prev) => {
       const newExpanded = {};
       Object.keys(prev).forEach((key) => {
-        newExpanded[key] = false;
+        newExpanded[key] = true;
       });
       return { ...newExpanded, [index]: !prev[index] };
     });

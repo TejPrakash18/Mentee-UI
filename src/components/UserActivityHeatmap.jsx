@@ -112,7 +112,7 @@ const UserActivityHeatmap = ({ username }) => {
           day ? (
             <div
               key={dayIndex}
-              className={`rounded-[2px] ${boxSize} ${getColor(day.count)} cursor-pointer border-none`}
+              className={`rounded-[3px] ${boxSize} ${getColor(day.count)} cursor-pointer border-none`}
               title={`${day.count} solved on ${format(parseISO(day.date), "dd MMM yyyy")}`}
             />
           ) : (
@@ -123,7 +123,7 @@ const UserActivityHeatmap = ({ username }) => {
     ));
 
   return (
-    <div className="bg-[#1e1e22] text-white rounded-xl p-4 sm:p-6 shadow-lg w-full">
+    <div className="bg-[#1e1e22] text-white rounded-xl p-4 mt-10 sm:p-6 shadow-lg w-full">
       <style>{`
         /* Custom scrollbar */
         .custom-scrollbar::-webkit-scrollbar {
@@ -138,7 +138,7 @@ const UserActivityHeatmap = ({ username }) => {
           border-radius: 8px;
         }
         .custom-scrollbar {
-          scrollbar-width: thin;
+          scrollbar-width: thin;  
           scrollbar-color: #22c55e #2a2a2f;
         }
       `}</style>
@@ -179,3 +179,17 @@ const UserActivityHeatmap = ({ username }) => {
 };
 
 export default UserActivityHeatmap;
+
+
+{/* 
+  <html>
+  <Head> 
+  <title> Dom Example</title>
+  </head>
+  <body>
+  <h1 id="heading"> Hello Dom </h1>
+  <p class = "txt">Hello Tej! </p>
+  </body>
+  </Html>
+  
+  */}
