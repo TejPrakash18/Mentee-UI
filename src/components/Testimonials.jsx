@@ -79,16 +79,16 @@ const TestimonialCard = ({ testimonial }) => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#1c1c1f] to-[#111113] border border-[#2a2a2d] p-6 rounded-2xl shadow-md space-y-4 hover:shadow-lg hover:ring-1 hover:ring-sky-500 transition-all duration-300">
-      <div className="flex items-center gap-3">
-        <div className="w-15 h-15 rounded-full overflow-hidden bg-sky-900 flex items-center justify-center text-xl">
+    <div className="bg-gradient-to-br from-[#1c1c1f] to-[#111113] border border-[#2a2a2d] p-6 rounded-2xl shadow-sm hover:shadow-md hover:ring-1 hover:ring-sky-500 transition-all duration-300 space-y-4">
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 rounded-full overflow-hidden bg-sky-900 flex items-center justify-center text-xl shrink-0">
           {avatarUrl ? (
             <img src={avatarUrl} alt={testimonial.name} className="w-full h-full object-cover" />
           ) : (
             <FaUserCircle className="text-white text-2xl" />
           )}
         </div>
-        <div>
+        <div className="flex flex-col">
           <h3 className="font-semibold text-lg text-white">{testimonial.name}</h3>
           <p className="text-sm text-gray-400">{testimonial.company}</p>
         </div>
