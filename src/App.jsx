@@ -21,6 +21,7 @@ import TrustedCompanies from "./components/TrustedCompanies";
 import NotFoundPage from "./pages/NotFoundPage";
 import DashboardPage from "./pages/UserDashboard";
 import DSADetailPage from "./pages/DSADetailPage";
+import Testimonials from "./components/Testimonials";
 
 function App() {
   return (
@@ -77,6 +78,7 @@ function App() {
                 <WhyChooseUs />
                 <Instructor />
                 <TrustedCompanies />
+                <Testimonials/>
                 <FAQPage />
                 <Footer />
               </>

@@ -87,7 +87,7 @@ const SidebarProfile = () => {
   </h3>
 
   {/* Card container */}
-  <div className="bg-[#1e293b] rounded-xl p-4 shadow-inner space-y-4">
+  <div className="bg-sky-600/20 rounded-xl p-4 shadow-inner space-y-4">
     {/* Personal Info */}
     <div className="space-y-2 divide-y divide-[#334155]">
       <Info label="Email" value={profile.email} />

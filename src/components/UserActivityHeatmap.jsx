@@ -152,7 +152,7 @@ const UserActivityHeatmap = ({ username }) => {
         </h2>
         <div className="text-sm text-gray-400">
           <span className="mr-4">
-            Total active days: {Object.keys(activityData).length}
+            Active days: {Object.keys(activityData).length}
           </span>
           <span>Max streak: {streaks.longest}</span>
         </div>
