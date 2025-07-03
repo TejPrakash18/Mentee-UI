@@ -13,15 +13,14 @@ import Navbar from "../components/Navbar";
 import Stopwatch from "../components/Stopwatch";
 import { toast } from "sonner";
 import { ImCross } from "react-icons/im";
-import { FiPlay } from "react-icons/fi";
-import { FiUploadCloud } from "react-icons/fi";
+import { FiPlay, FiUploadCloud } from "react-icons/fi";
+import { LuCircleCheckBig } from "react-icons/lu";
 import {
   HiMiniBarsArrowUp,
   HiOutlineArrowLeft,
   HiOutlineArrowRight,
 } from "react-icons/hi2";
 import NotFoundPage from "./NotFoundPage";
-import { AlignRight } from "lucide-react";
 
 const compilers = [
   { name: "Java", id: "java", language: "java", judge0_id: 62 },
@@ -52,6 +51,8 @@ int main() {
   javascript: `console.log("Hello, JavaScript!");`,
 };
 
+const normalizeOutput = (output) => output.replace(/\r/g, "").trim();
+
 const DSADetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -66,15 +67,17 @@ const DSADetailPage = () => {
   const [execTime, setExecTime] = useState(null);
   const [memoryUsage, setMemoryUsage] = useState(null);
   const [notFound, setNotFound] = useState(false);
-  const [showDSASidebar, setShowDSASidebar] = useState(false);
   const [dsaList, setDsaList] = useState([]);
   const [completedTitles, setCompletedTitles] = useState([]);
-  const [outputTab, setOutputTab] = useState("output"); // "output" | "expected" | "diff"
-  
+  const [outputTab, setOutputTab] = useState("output");
+  const [hasRun, setHasRun] = useState(false);
+  const [showDSASidebar, setShowDSASidebar] = useState(false);
+  const [lastSubmittedCode, setLastSubmittedCode] = useState("");
+  const [lastSubmittedOutput, setLastSubmittedOutput] = useState("");
+  const [lastRunOutput, setLastRunOutput] = useState("");
+  const [submissionStatus, setSubmissionStatus] = useState(null);
 
   const currentCompiler = compilers.find((c) => c.id === selectedCompiler);
-
-  
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -124,36 +127,6 @@ const DSADetailPage = () => {
         return "text-red-500";
       default:
         return "text-gray-400";
-    }
-  };
-
-  const handleMarkComplete = async () => {
-    const username = localStorage.getItem("username");
-    if (!username) return toast.warning("You must be logged in.");
-    if (!question?.title) return toast.warning("Question not loaded.");
-    if (!outputText) return toast.warning("Please run your code first.");
-
-    const cleanedOutput = outputText.trim();
-    const expectedOutput = (question.expected_output || "").trim();
-
-    if (cleanedOutput === expectedOutput) {
-      try {
-        await markDSAComplete(username, question.title);
-        setOutputText(
-          `Correct Answer \n\nYour Output:\n${cleanedOutput}\n\nExpected Output:\n${expectedOutput}`
-        );
-        setTimeout(() => {
-          alert("Question submitted successfully!");
-        }, 1000);
-        setIsCompleted(true);
-        await logUserActivity(username);
-      } catch {
-        toast.warning("Error marking as complete.");
-      }
-    } else {
-      setOutputText(
-        `Wrong Answer \n\nYour Output:\n${cleanedOutput}\n\nExpected Output:\n${expectedOutput}`
-      );
     }
   };
 
@@ -208,17 +181,19 @@ const DSADetailPage = () => {
           setTimeout(checkResult, 1000);
         } else {
           const resData = result.data;
-          setOutputText(
+          const newOutput =
             resData.stdout ||
-              resData.stderr ||
-              resData.compile_output ||
-              "No output."
-          );
+            resData.stderr ||
+            resData.compile_output ||
+            "No output.";
+          setOutputText(newOutput);
+          setLastRunOutput(newOutput);
           setExecTime(resData.time ? `${resData.time} sec` : null);
           setMemoryUsage(
             resData.memory ? `${(resData.memory / 1024).toFixed(2)} KB` : null
           );
           setIsLoading(false);
+          setHasRun(true);
         }
       };
 
@@ -226,6 +201,51 @@ const DSADetailPage = () => {
     } catch {
       setOutputText("Error running code.");
       setIsLoading(false);
+    }
+  };
+
+  const handleMarkComplete = async () => {
+    const username = localStorage.getItem("username");
+    if (!username) return toast.warning("You must be logged in.");
+    if (!question?.title) return toast.warning("Question not loaded.");
+    if (!hasRun)
+      return toast.warning("Please run your code before submitting.");
+
+    const cleanedOutput = normalizeOutput(outputText);
+    const expectedOutput = normalizeOutput(question.expected_output || "");
+
+    if (normalizeOutput(lastRunOutput) !== cleanedOutput) {
+      return toast.warning("Please run your latest code before submitting.");
+    }
+
+    if (cleanedOutput === expectedOutput) {
+      if (lastSubmittedCode === code && lastSubmittedOutput === cleanedOutput) {
+        return toast.warning(
+          "You've already submitted this exact solution. Modify or re-run before submitting again."
+        );
+      }
+      try {
+        await markDSAComplete(username, question.title);
+        setOutputText(
+          `Correct Answer \n\nYour Output:\n${cleanedOutput}\n\nExpected Output:\n${expectedOutput}`
+        );
+        setTimeout(() => {
+          alert("Question submitted successfully!");
+        }, 1000);
+        setIsCompleted(true);
+        setLastSubmittedCode(code);
+        setLastSubmittedOutput(cleanedOutput);
+        await logUserActivity(username);
+        setHasRun(false);
+        setSubmissionStatus("success"); // ✅ SET SUCCESS
+      } catch {
+        toast.warning("Error marking as complete.");
+      }
+    } else {
+      setOutputText(
+        `Wrong Answer \n\nYour Output:\n${cleanedOutput}\n\nExpected Output:\n${expectedOutput}`
+      );
+      setSubmissionStatus(null); // reset on failure
     }
   };
 
@@ -299,14 +319,24 @@ const DSADetailPage = () => {
 
             <button
               onClick={handleMarkComplete}
-              disabled={isCompleted}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition ${
+              disabled={
+                !hasRun ||
+                normalizeOutput(outputText) !==
+                  normalizeOutput(lastRunOutput) ||
                 isCompleted
-                  ? "bg-[#1A1A1A] text-green-500 cursor-not-allowed"
+              }
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition ${
+                isCompleted ||
+                normalizeOutput(outputText) !== normalizeOutput(lastRunOutput)
+                  ? "bg-[#1A1A1A] text-gray-500 cursor-not-allowed"
                   : "bg-[#1A1A1A] hover:bg-[#383838] text-green-500"
               }`}
             >
-              <FiUploadCloud size={16} />
+              {submissionStatus === "success" ? (
+                <LuCircleCheckBig size={16} />
+              ) : (
+                <FiUploadCloud size={16} />
+              )}
               {isCompleted ? "Completed" : "Submit"}
             </button>
           </div>

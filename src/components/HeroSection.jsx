@@ -1,3 +1,4 @@
+import ChatAssistant from "./ChatAssistant";
 import FeatureCard from "./FeatureCard";
 import TypingEffect from "./Typed";
 import {
@@ -42,6 +43,7 @@ const HeroSection = () => {
           />
         </div>
       </section>
+      {/* <ChatAssistant/> */}
     </div>
   );
 };

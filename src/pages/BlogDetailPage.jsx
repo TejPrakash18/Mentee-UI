@@ -257,10 +257,10 @@ const BlogDetailPage = () => {
         <div className="max-w-6xl mx-auto px-6 mt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center text-gray-200 text-sm font-medium"
+            className="flex items-center text-gray-200 text-sm font-medium hover:text-orange-500"
           >
-            <FaArrowLeft className="mr-2 text-base" />
-            Back
+            <FaArrowLeft className="mr-2 text-base"/>
+            Go Back
           </button>
 
           <label className="flex items-center gap-2 text-sm text-white font-medium">

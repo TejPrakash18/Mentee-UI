@@ -14,14 +14,14 @@ const DashboardPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             {/* Sidebar */}
             <div className="lg:col-span-1 w-full">
-              <div className="bg-[#1A1A1A] rounded-xl p-4 sm:p-6 shadow-inner border border-[#282828]">
+              <div className="bg-[#1A1A1A] rounded-xl p-4 sm:p-6 shadow-inner border border-[#282828] hover:border-orange-500">
                 <SidebarProfile />
               </div>
             </div>
 
             {/* Main Dashboard */}
             <div className="lg:col-span-2 w-full flex flex-col gap-6">
-              <div className="bg-[#1A1A1A] rounded-xl p-4 sm:p-6 shadow-inner border border-[#282828]">
+              <div className="bg-[#1A1A1A] rounded-xl p-4 sm:p-6 shadow-inner border border-[#282828] hover:border-orange-500">
                 <ProgressBar />
               </div>
             </div>
