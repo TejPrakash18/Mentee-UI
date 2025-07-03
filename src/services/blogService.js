@@ -12,8 +12,9 @@ export const getBlogsByCategory = (category) =>
 export const getBlogsByDifficulty = (difficulty) =>
   api.get(`/blogs/difficulty?difficulty=${encodeURIComponent(difficulty)}`);
 
+// ✅ FIXED: Now using POST body instead of query params
 export const markBlogComplete = (username, title) =>
-  api.post(`/blogs/complete?username=${username}&title=${encodeURIComponent(title)}`);
+  api.post(`/blogs/complete`, { username, title });
 
 export const getCompletedBlogs = (username) =>
   api.get(`/blogs/completed?username=${username}`);
@@ -61,3 +62,4 @@ export const getCompletedBlogCountByCategory = async (username) => {
     return {};
   }
 };
+

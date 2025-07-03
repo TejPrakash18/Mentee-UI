@@ -128,7 +128,7 @@ const DSAPage = () => {
             return (
               <div
                 key={catIdx}
-                className="bg-neutral-900/80 backdrop-blur p-4 sm:p-6 rounded-xl shadow-lg shadow-black/40"
+                className="bg-[#1A1A1A] backdrop-blur p-4 sm:p-6 rounded-xl shadow-lg shadow-black/40"
               >
                 {/* Title + Progress + Toggle Button */}
                 <button

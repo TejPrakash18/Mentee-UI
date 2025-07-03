@@ -1,0 +1,202 @@
+[
+    {
+      "id": 1,
+      "version": 2,
+      "title": "OOPs in Java - II",
+      "difficulty": "Medium",
+      "category": "technical",
+      "tags": ["Java", "OOP", "Backend", "Advanced Java", "Concepts"],
+      "description": "This blog continues the exploration of OOP principles in Java with in-depth explanations, definitions, best practices, and full code examples for advanced topics like Enums, POJO, Final keyword, Wrapper Classes, Generics, Lambdas, and Reflection.",
+      "technologies": ["Java", "OOPs", "Core Java"],
+      "sections": [
+        {
+          "title": "1. ENUM in Depth",
+          "content": [
+            {
+              "type": "code",
+              "language": "java",
+              "text": "Enum is a special Java type used to define collections of constants.",
+              "code": "enum Status {\n    PENDING, APPROVED, REJECTED;\n}\n\npublic class EnumExample {\n    public static void main(String[] args) {\n        Status s = Status.APPROVED;\n        switch (s) {\n            case PENDING -> System.out.println(\"Still waiting...\");\n            case APPROVED -> System.out.println(\"Approved ✅\");\n            case REJECTED -> System.out.println(\"Rejected ❌\");\n        }\n    }\n}",
+              "url": null,
+              "alt": null
+            }
+          ]
+        },
+        {
+          "title": "2. POJO Class in Depth",
+          "content": [
+            {
+              "type": "code",
+              "language": "java",
+              "text": "POJO (Plain Old Java Object) is a simple class with private variables and public getters/setters.",
+              "code": "public class Student {\n    private String name;\n    private int roll;\n\n    public Student() {}\n\n    public String getName() { return name; }\n    public void setName(String name) { this.name = name; }\n\n    public int getRoll() { return roll; }\n    public void setRoll(int roll) { this.roll = roll; }\n}\n\nclass PojoTest {\n    public static void main(String[] args) {\n        Student s = new Student();\n        s.setName(\"Tej\");\n        s.setRoll(101);\n        System.out.println(s.getName() + \" - \" + s.getRoll());\n    }\n}",
+              "url": null,
+              "alt": null
+            }
+          ]
+        },
+        {
+          "title": "3. final Keyword in Depth",
+          "content": [
+            {
+              "type": "code",
+              "language": "java",
+              "text": "The final keyword is used to prevent changes to variables, methods, or classes.",
+              "code": "final class Constants {\n    public static final double PI = 3.14159;\n}\n\nclass FinalExample {\n    public static void main(String[] args) {\n        System.out.println(\"Value of PI: \" + Constants.PI);\n    }\n}",
+              "url": null,
+              "alt": null
+            }
+          ]
+        },
+        {
+          "title": "4. Wrapper Class in Depth",
+          "content": [
+            {
+              "type": "code",
+              "language": "java",
+              "text": "Wrapper classes convert primitives into objects.",
+              "code": "public class WrapperDemo {\n    public static void main(String[] args) {\n        int num = 50;\n        Integer wrapped = Integer.valueOf(num); // Boxing\n        int unwrapped = wrapped.intValue(); // Unboxing\n\n        System.out.println(\"Boxed: \" + wrapped);\n        System.out.println(\"Unboxed: \" + unwrapped);\n    }\n}",
+              "url": null,
+              "alt": null
+            }
+          ]
+        },
+        {
+          "title": "5. Generic Class in Depth",
+          "content": [
+            {
+              "type": "code",
+              "language": "java",
+              "text": "Generics provide type safety and reusability.",
+              "code": "class Box<T> {\n    private T item;\n\n    public void setItem(T item) {\n        this.item = item;\n    }\n\n    public T getItem() {\n        return item;\n    }\n}\n\npublic class GenericDemo {\n    public static void main(String[] args) {\n        Box<String> stringBox = new Box<>();\n        stringBox.setItem(\"Java Rocks\");\n        System.out.println(stringBox.getItem());\n\n        Box<Integer> intBox = new Box<>();\n        intBox.setItem(2025);\n        System.out.println(intBox.getItem());\n    }\n}",
+              "url": null,
+              "alt": null
+            }
+          ]
+        },
+        {
+          "title": "6. Lambda Expression in Depth",
+          "content": [
+            {
+              "type": "code",
+              "language": "java",
+              "text": "Lambda expressions simplify the use of functional interfaces.",
+              "code": "interface Calculator {\n    int operate(int a, int b);\n}\n\npublic class LambdaExample {\n    public static void main(String[] args) {\n        Calculator add = (a, b) -> a + b;\n        Calculator multiply = (a, b) -> a * b;\n\n        System.out.println(\"Add: \" + add.operate(10, 5));\n        System.out.println(\"Multiply: \" + multiply.operate(10, 5));\n    }\n}",
+              "url": null,
+              "alt": null
+            }
+          ]
+        },
+        {
+          "title": "7. Reflection in Java - Setup and Invocation",
+          "content": [
+            {
+              "type": "code",
+              "language": "java",
+              "text": "Reflection lets you inspect and modify classes at runtime.",
+              "code": "import java.lang.reflect.Method;\n\nclass ReflectTarget {\n    public void hello() {\n        System.out.println(\"Hello from reflection!\");\n    }\n}\n\npublic class ReflectionExample {\n    public static void main(String[] args) throws Exception {\n        Class<?> cls = Class.forName(\"ReflectTarget\");\n        Object obj = cls.getDeclaredConstructor().newInstance();\n        Method method = cls.getDeclaredMethod(\"hello\");\n        method.invoke(obj);\n    }\n}",
+              "url": null,
+              "alt": null
+            }
+          ]
+        }
+      ]
+    },
+
+{
+    "id": 2,
+    "version": 2,
+    "title": "OOPs in Java",
+    "difficulty": "Easy",
+    "category": "technical",
+    "tags": ["Java", "OOP", "Backend", "Core Java", "Concepts"],
+    "description": "This blog continues the exploration of OOP principles in Java with in-depth explanations, definitions, best practices, and full code examples for advanced topics like Enums, POJO, Final keyword, Wrapper Classes, Generics, Lambdas, and Reflection.",
+    "technologies": ["Java", "OOPs", "Core Java"],
+    "sections": [
+      {
+        "title": "1. What is Oop's",
+        "content": [
+          {
+            "type": "code",
+            "language": "java",
+            "text": "Oop's is stand for object oriented programming structure, that is used to solve real world problem. Oop's is programming paradigm and methodology to design a application/program using class and object.\n O -> Object => Real world Entity\n O - Oriented => Around of the entity, property, and behavior.\n P - Programming => A Lanaguage like CPP, Java, Python\n S - Structure => A templete or blueprint of class",
+            "text1":"What is Object?\n     Object any entity that has state and behavior is known as object. Object can be defined as an instance of a class and contains an address and taken up same space in memory. \n Example - A dog is an object becouse it has same states like Color, Name, Breed, etc... as well as behaviors like Wagging the tail, Braking,Eating\n   An Object has three Characterstics\n State: Represent the data (value) of an object\n Behavior: Represent the behavior (Function) of the object.\n Indentify: An Object Indentify is typically implemented via a unique id. It is used internally by the JVM to indentify each object uniquely.",
+            "text2":"What is Class?\n      Class collection of objects is called class, it is a logically entity or blueprint of a structure class does not consume any space. It is a also user define data type.\n A class can contains?\n field, method, constructor, blocks, nested class and interface",
+            "code": "class className{\n    //state/property/field/dataMember\n    //behavior/function/datafunction/method\n}",
+            "text3":"Example- Human has Head, Leg, Eyes as a data member or state and Eat, Walk, Speak as a Method or behavior",
+            "text4":"Method: A method is like a function which is used to expose the behavior of an object.\n  Advantage of method\n  Code reusability, Code optimization",
+            "text5":"New Keyword:\n The new keyword is used to allocate memory at runtime all object get memory in heap memory area.",
+            "code1":"class Student{\n    int id=001;\n    int age=23;\n    String name=\"Tej\";\n   void sleep(){\n    System.out.println(\"Tej is Sleeping\");\n  }\n}\n\n class Main{\n    public static void main(String args){\n    Student s1 = new Student();\n    System.out.println(s1.id);\n    System.out.println(s1.age);\n    System.out.println(s1.name);\n    s1.sleep();\n  }\n}",
+            "url": null,
+            "alt": null
+          }
+        ]
+    }
+    ]
+},
+{
+"id": 0,
+    "version": 0,
+    "title": "",
+    "difficulty": "",
+    "category": "",
+    "tags": [],
+    "description": "",
+    "technologies": [],
+    "sections": [
+      {
+        "title": "",
+        "content": [
+          {
+            "type": "code",
+            "language": "java",
+            "text":"",
+            "text1":"",
+            "code": null,
+            "text2":"",
+            "code1":null,
+            "url": null,
+            "text3":"",
+            "code2":null,
+            "alt": null
+          }
+        ]
+      },
+      {
+        "title": "",
+        "content": [
+          {
+            "type": "code",
+            "language": "java",
+            "text":"",
+            "text1":"",
+            "code": null,
+            "text2":"",
+            "code1":null,
+            "url": null,
+            "text3":"",
+            "code2":null,
+            "alt": null
+          }
+        ]
+      },
+      {
+        "title": "",
+        "content": [
+          {
+            "type": "code",
+            "language": "java",
+            "text":"",
+            "text1":"",
+            "code": null,
+            "text2":"",
+            "code1":null,
+            "url": null,
+            "text3":"",
+            "code2":null,
+            "alt": null
+          }
+        ]
+      }
+    ]
+]

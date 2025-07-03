@@ -208,9 +208,9 @@ const CompilerPage = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-[90vh] bg-[#0f1117] text-white rounded mt-3 mx-4 lg:mx-20 flex flex-col shadow-lg overflow-hidden">
+      <div className="min-h-[90vh] bg-[#1A1A1A] text-white rounded mt-3 mx-4 lg:mx-20 flex flex-col shadow-lg overflow-hidden">
         {/* Compiler Switch Tabs */}
-        <div className="flex flex-wrap justify-start bg-[#161821] px-3 py-2 gap-2 items-center border-b border-gray-700 overflow-x-auto">
+        <div className="flex flex-wrap justify-start bg-[#282828] px-3 py-2 gap-2 items-center border-b border-[#1A1A1A] overflow-x-auto">
           {compilers.map((c) => (
             <button
               key={c.id}
@@ -221,8 +221,8 @@ const CompilerPage = () => {
               }}
               className={`flex items-center gap-2 px-3 py-2 rounded-md border transition-all duration-200 ${
                 selectedCompiler === c.id
-                  ? "bg-blue-600 border-blue-600 text-white"
-                  : "bg-[#1e1e2e] border-gray-600 text-gray-300 hover:bg-blue-500 hover:text-white"
+                  ? "bg-[#1A1A1A] border-[#1A1A1A] text-white"
+                  : "bg-[#282828] border-[#282828] text-gray-300 hover:bg-blue-500 hover:text-white"
               }`}
               title={c.name}
             >
@@ -235,7 +235,7 @@ const CompilerPage = () => {
         {/* Main Section */}
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden p-3 gap-3 w-full h-full overflow-x-hidden">
           {/* Editor */}
-          <div className="w-full lg:w-[60%] flex flex-col bg-[#1a1b26] rounded p-4 shadow-md">
+          <div className="w-full lg:w-[60%] flex flex-col bg-[#282828] rounded p-4 shadow-md">
             {/* Header & Buttons */}
             <div className="flex justify-between items-center mb-2 flex-wrap gap-2 sm:flex-row flex-col sm:items-center">
               <h2 className="text-lg font-bold">
@@ -256,7 +256,7 @@ const CompilerPage = () => {
                 <button
                   onClick={handleRun}
                   title="Run your code"
-                  className="flex items-center gap-2 px-3 py-1.5 bg-transparent border border-gray-500 text-gray-300 hover:bg-gray-500 hover:text-white rounded-md text-sm font-medium transition-all"
+                  className="flex items-center gap-2 px-3 py-1.5  bg-[#1A1A1A] border-[#282828] text-gray-300 hover:bg-[#1A1A1A] hover:text-white rounded-md text-sm font-medium transition-all"
                 >
                   <FaPlay className="text-sm" />
                   {isLoading ? "Running..." : "Run"}
@@ -265,7 +265,7 @@ const CompilerPage = () => {
             </div>
 
             {/* Monaco Editor */}
-            <div className="flex-1 border border-gray-700 rounded-lg overflow-hidden w-full max-w-full">
+            <div className="flex-1 border border-[#282828] rounded-lg overflow-hidden w-full max-w-full">
               <Editor
                 height="500px"
                 defaultLanguage={currentCompiler.language}
@@ -286,10 +286,10 @@ const CompilerPage = () => {
           {/* Input & Output */}
           <div className="w-full lg:w-[40%] flex flex-col gap-3">
             {/* Input */}
-            <div className="flex-1 bg-[#1a1b26] p-4 rounded-xl shadow-sm flex flex-col">
+            <div className="flex-1 bg-[#1A1A1A] p-4 rounded-xl shadow-sm flex flex-col">
               <h3 className="text-md font-semibold mb-2">Input</h3>
               <textarea
-                className="flex-1 bg-[#0f1117] text-white p-2 rounded resize-none border border-gray-700 min-h-[120px]"
+                className="flex-1 bg-[#282828] text-white p-2 rounded resize-none border border-[#282828] min-h-[120px]"
                 placeholder="Enter input here if required..."
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
@@ -299,10 +299,10 @@ const CompilerPage = () => {
             {/* Output */}
             <div
               id="output-box"
-              className="flex-1 bg-[#1a1b26] p-4 rounded shadow-sm flex flex-col overflow-hidden"
+              className="flex-1 bg-[#1A1A1A] p-4 rounded shadow-sm flex flex-col overflow-hidden"
             >
               <h3 className="text-md font-semibold mb-2">Output</h3>
-              <pre className="flex-1 bg-[#0f1117] text-green-400 p-2 rounded overflow-y-auto text-sm whitespace-pre-wrap border border-gray-700 min-h-[120px]">
+              <pre className="flex-1 bg-[#282828] text-green-400 p-2 rounded overflow-y-auto text-sm whitespace-pre-wrap border border-[#282828] min-h-[120px]">
                 {isLoading
                   ? "Running..."
                   : outputText || "Your output will appear here..."}
@@ -314,8 +314,8 @@ const CompilerPage = () => {
 
       {/* Notes Section */}
       {currentNotes && (
-        <div className="bg-[#0f1117] text-gray-100 rounded shadow-lg my-6 mx-4 lg:mx-20 p-6">
-          <h2 className="text-3xl font-bold mb-6 border-b border-gray-700 pb-2">
+        <div className="bg-[#1A1A1A] text-gray-100 rounded shadow-lg my-6 mx-4 lg:mx-20 p-6">
+          <h2 className="text-3xl font-bold mb-6 border-b border-[#282828] pb-2">
             {currentNotes.title}
           </h2>
           {currentNotes.sections.map((section, index) => (

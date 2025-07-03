@@ -4,9 +4,9 @@ import { FaUserCircle } from "react-icons/fa";
 
 const names = [
   "Harshit", "Shankul", "Anish", "Nitin", "Gungun",
-  "Pihu", "Annie", "Charu", "Stuti", "Priti",
+  "Pihu", "Annie", "Vivek", "Kajal", "Priti",
   "Kanika", "Arun", "Lokendra", "Sumit", "Vikas",
-  "Gaurav", "Aarav", "Vishal", "Shellu", "Prabhav",
+  "Gaurav", "Aarav", "Vishal", "Charu", "Stuti",
   "Manish", "Amit", "Diya", "Sachin", "Aryan", "Sonam"
 ];
 

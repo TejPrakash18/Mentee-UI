@@ -1,35 +1,21 @@
 const BlogCard = ({ title, progress = 0 }) => {
+  const isDone = progress === 100;
+
   return (
-    <div
-      className="bg-[#1c1c1e] rounded-2xl shadow-xl flex flex-col justify-between h-full p-6 text-white transition-transform duration-300 
-                 hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      tabIndex={0}
-    >
-      {/* Title */}
-      <h4 className="text-xl font-semibold mb-6 line-clamp-2">{title}</h4>
-
-      {/* Progress Status */}
-
-      {progress !== null && typeof progress === "number" && (
-        <div className="text-sm text-gray-300 mb-4 flex justify-between items-center">
-          <span className="text-gray-500">Status</span>
-          <span
-            className={`px-2 py-1 rounded-md text-xs font-semibold ${
-              progress === 100
-                ? "bg-green-600 text-white"
-                : "bg-yellow-600 text-white"
-            }`}
-          >
-            {progress === 100 ? "Done" : "Pending"}
+    <div className="h-full flex flex-col justify-between bg-[#1A1A1A] border border-[#2C2C2C] rounded-xl p-6 transition-all duration-200 hover:border-orange-600 group">
+      {/* Title & Status */}
+      <div>
+        <h4 className="text-lg font-semibold mb-4 line-clamp-2 min-h-[3rem]">{title}</h4>
+        <div className="flex justify-between text-sm text-gray-400">
+          <span>Status</span>
+          <span className={isDone ? "text-green-500" : "text-yellow-500"}>
+            {isDone ? "Done" : "Pending"}
           </span>
         </div>
-      )}
+      </div>
 
-      {/* CTA Button */}
-      <button
-        className="w-full bg-[#2a2a2c] hover:bg-[#333336] text-white font-medium py-2 rounded-md text-sm"
-        aria-label={`Start learning ${title}`}
-      >
+      {/* Start Learning Button at Bottom */}
+      <button className="mt-6 w-full text-white-500 font-medium text-sm py-2 px-4 rounded-md bg-[#2C2C2C]  group-hover:text-orange-500 transition duration-300 ease-in-out">
         Start Learning →
       </button>
     </div>

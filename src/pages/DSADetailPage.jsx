@@ -70,8 +70,11 @@ const DSADetailPage = () => {
   const [dsaList, setDsaList] = useState([]);
   const [completedTitles, setCompletedTitles] = useState([]);
   const [outputTab, setOutputTab] = useState("output"); // "output" | "expected" | "diff"
+  
 
   const currentCompiler = compilers.find((c) => c.id === selectedCompiler);
+
+  
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -231,83 +234,43 @@ const DSADetailPage = () => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col md:flex-row min-h-screen bg-[#0f0f0f] text-white p-4 md:p-6 mx-2 md:mx-10 mt-4 gap-4 rounded-xl">
-        {/* Sidebar */}
-        <div className="w-full md:w-[40%] p-4 bg-[#1e1e22] border border-gray-700 rounded-xl overflow-y-auto">
-          {question ? (
-            <>
-              {/* Title + Prev/Next */}
-              {/* Navigation buttons above title */}
-              <div className="flex justify-between items-center mb-2">
-                <button
-                  onClick={() => {
-                    const index = dsaList.findIndex(
-                      (q) => q.id?.toString() === id?.toString()
-                    );
-                    if (index > 0)
-                      navigate(`/dsa/question/${dsaList[index - 1].id}`);
-                    else toast.warning("No previous question.");
-                  }}
-                  className="p-2 bg-[#2c2c2e] hover:bg-[#3c3c3e] rounded-full"
-                  title="Previous"
-                >
-                  <HiOutlineArrowLeft />
-                </button>
+      <div className="min-h-[99vh] bg-[#1A1A1A] text-white rounded mt-3 mx-4 lg:mx-20 flex flex-col shadow-lg overflow-hidden">
+        {/* Top Header with Controls */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 py-2 px-4 border-b border-[#383838] bg-[#282828]">
+          {/* Prev / Next */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                const index = dsaList.findIndex(
+                  (q) => q.id?.toString() === id?.toString()
+                );
+                if (index > 0)
+                  navigate(`/dsa/question/${dsaList[index - 1].id}`);
+                else toast.warning("No previous question.");
+              }}
+              className="p-2 bg-[#1A1A1A] hover:bg-[#383838] rounded-full"
+              title="Previous"
+            >
+              <HiOutlineArrowLeft />
+            </button>
+            <button
+              onClick={() => {
+                const index = dsaList.findIndex(
+                  (q) => q.id?.toString() === id?.toString()
+                );
+                if (index < dsaList.length - 1)
+                  navigate(`/dsa/question/${dsaList[index + 1].id}`);
+                else toast.warning("No next question.");
+              }}
+              className="p-2 bg-[#1A1A1A] hover:bg-[#383838] rounded-full"
+              title="Next"
+            >
+              <HiOutlineArrowRight />
+            </button>
+          </div>
 
-                <button
-                  onClick={() => {
-                    const index = dsaList.findIndex(
-                      (q) => q.id?.toString() === id?.toString()
-                    );
-                    if (index < dsaList.length - 1)
-                      navigate(`/dsa/question/${dsaList[index + 1].id}`);
-                    else toast.warning("No next question.");
-                  }}
-                  className="p-2 bg-[#2c2c2e] hover:bg-[#3c3c3e] rounded-full"
-                  title="Next"
-                >
-                  <HiOutlineArrowRight />
-                </button>
-              </div>
-
-              {/* Question Title Centered Below Navigation */}
-              <h1 className="text-xl font-bold text-orange-400 mb-5 mt-10 capitalize ">
-                {question.title}
-              </h1>
-
-              <p
-                className={`text-sm mb-4 font-semibold  capitalize ${getDifficultyColor(
-                  question.difficulty
-                )}`}
-              >
-                Difficulty: {question.difficulty}
-              </p>
-              <p className="text-gray-200 whitespace-pre-line">
-                {question.explanation}
-              </p>
-              <h3 className="text-lg font-semibold mt-6 text-orange-300">
-                Examples:
-              </h3>
-              {question.examples?.map((ex, idx) => (
-                <div key={idx} className="bg-[#2a2a2d] p-3 rounded-md mt-2">
-                  <p>
-                    <span className="text-green-400">Input:</span> {ex.input}
-                  </p>
-                  <p>
-                    <span className="text-blue-400">Output:</span> {ex.output}
-                  </p>
-                </div>
-              ))}
-            </>
-          ) : (
-            <p>Loading...</p>
-          )}
-        </div>
-
-        {/* Editor Panel */}
-        <div className="w-full md:w-[60%] flex flex-col gap-4">
-          {/* Controls */}
-          <div className="flex justify-between items-center gap-2 px-3 py-2 border border-gray-700 rounded-xl bg-[#1e1e22]">
+          {/* Language Selector, Stopwatch, Run, Submit */}
+          <div className="flex items-center gap-2">
             <select
               value={selectedCompiler}
               onChange={(e) => {
@@ -315,7 +278,7 @@ const DSADetailPage = () => {
                 setSelectedCompiler(lang);
                 setCode(defaultCodeMap[lang]);
               }}
-              className="bg-[#2c2c2e] text-white p-1.5 rounded-lg text-sm"
+              className="bg-[#1A1A1A] text-white p-1.5 rounded-lg text-sm border border-[#383838]"
             >
               {compilers.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -324,56 +287,91 @@ const DSADetailPage = () => {
               ))}
             </select>
 
-            <div className="flex items-center gap-2">
-              {/* Stopwatch Component */}
-              <Stopwatch />
+            <Stopwatch />
 
-              {/* Run Button */}
-              <button
-                onClick={handleRun}
-                className="flex items-center gap-2 bg-[#2d2d2d] hover:bg-[#3d3d3d] text-white px-3 py-1.5 rounded-md text-sm transition"
-              >
-                <FiPlay className="text-gray-300" size={14} />
-                {isLoading ? "Running..." : "Run"}
-              </button>
+            <button
+              onClick={handleRun}
+              className="flex items-center gap-2 bg-[#1A1A1A] hover:bg-[#383838] text-white px-3 py-1.5 rounded-md text-sm"
+            >
+              <FiPlay className="text-gray-300" size={14} />
+              {isLoading ? "Running..." : "Run"}
+            </button>
 
-              {/* Submit Button */}
-              <button
-                onClick={handleMarkComplete}
-                disabled={isCompleted}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition ${
-                  isCompleted
-                    ? "bg-[#2d2d2d] text-green-500 cursor-not-allowed"
-                    : "bg-[#2d2d2d] hover:bg-[#3d3d3d] text-green-500"
-                }`}
-              >
-                <FiUploadCloud size={16} />
-                {isCompleted ? "Completed" : "Submit"}
-              </button>
+            <button
+              onClick={handleMarkComplete}
+              disabled={isCompleted}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition ${
+                isCompleted
+                  ? "bg-[#1A1A1A] text-green-500 cursor-not-allowed"
+                  : "bg-[#1A1A1A] hover:bg-[#383838] text-green-500"
+              }`}
+            >
+              <FiUploadCloud size={16} />
+              {isCompleted ? "Completed" : "Submit"}
+            </button>
+          </div>
+        </div>
+
+        {/* Main Layout */}
+        <div className="flex flex-col md:flex-row flex-grow gap-4 p-4 overflow-hidden">
+          {/* Sidebar - Question Info */}
+          <div className="w-full md:w-[40%] bg-[#282828] p-4 border border-[#383838] rounded-xl overflow-y-auto">
+            {question ? (
+              <>
+                <h1 className="text-xl font-bold text-white mb-3 capitalize">
+                  {question.title}
+                </h1>
+
+                <p
+                  className={`text-sm font-semibold capitalize ${getDifficultyColor(
+                    question.difficulty
+                  )}`}
+                >
+                  Difficulty: {question.difficulty}
+                </p>
+
+                <p className="text-gray-200 mt-4 whitespace-pre-line">
+                  {question.explanation}
+                </p>
+
+                <h3 className="text-lg font-semibold mt-6 text-orange-300">
+                  Examples:
+                </h3>
+                {question.examples?.map((ex, idx) => (
+                  <div key={idx} className="bg-[#1A1A1A] p-3 rounded-md mt-2">
+                    <p>
+                      <span className="text-green-400">Input:</span> {ex.input}
+                    </p>
+                    <p>
+                      <span className="text-blue-400">Output:</span> {ex.output}
+                    </p>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <p>Loading...</p>
+            )}
+          </div>
+
+          {/* Editor Section */}
+          <div className="w-full md:w-[60%] flex flex-col gap-4">
+            {/* Code Editor */}
+            <div className="h-[440px] border border-[#383838] rounded-lg overflow-hidden">
+              <Editor
+                height="100%"
+                language={currentCompiler.language}
+                value={code}
+                onChange={(val) => setCode(val || "")}
+                theme="vs-dark"
+              />
             </div>
-          </div>
 
-          {/* Code Editor */}
-          <div className="h-[390px] border border-gray-700 rounded-lg overflow-hidden">
-            <Editor
-              height="100%"
-              language={currentCompiler.language}
-              value={code}
-              onChange={(val) => setCode(val || "")}
-              theme="vs-dark"
-            />
-          </div>
-
-          {/* Input / Output */}
-          <div className="flex flex-col gap-4">
+            {/* Terminal */}
             <div className="w-full">
-              {/* Header with Tabs */}
               <div className="flex justify-between items-center mb-2">
-                <label className="text-orange-400 font-semibold text-base">
+                <label className="text-green-400 font-semibold text-base">
                   Terminal
                 </label>
-
-                {/* Green text tab links */}
                 <div className="flex space-x-4 text-sm font-semibold">
                   {["input", "output"].map((tab) => (
                     <span
@@ -381,8 +379,8 @@ const DSADetailPage = () => {
                       onClick={() => setOutputTab(tab)}
                       className={`cursor-pointer ${
                         outputTab === tab
-                          ? "text-green-400 underline underline-offset-4"
-                          : "text-gray-400 hover:text-green-300"
+                          ? "text-yellow-400 underline underline-offset-4"
+                          : "text-gray-400 hover:text-yellow-300"
                       }`}
                     >
                       {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -390,53 +388,53 @@ const DSADetailPage = () => {
                   ))}
                 </div>
               </div>
-
-              {/* Output Display Area */}
-              <div className="bg-[#1f1f23] text-white rounded-lg p-3 text-sm min-h-[180px] max-h-[300px] overflow-y-auto whitespace-pre-wrap">
-                {/* Input Tab */}
-                {outputTab === "input" && (
+              <div className="bg-[#1A1A1A] text-white rounded-lg p-3 text-sm min-h-[120px] max-h-[240px] overflow-y-auto whitespace-pre-wrap border border-[#383838]">
+                {outputTab === "input" ? (
                   <textarea
-                    className="w-full bg-[#1f1f23] text-white rounded-lg p-3 text-sm resize-none outline-none"
-                    rows="6"
+                    className="w-full bg-transparent text-white resize-none outline-none"
+                    rows="5"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                     placeholder="Enter input for your code..."
                   />
-                )}
-
-                {/* Output Tab */}
-                {outputTab === "output" && (
+                ) : (
                   <>
-                    {outputText.includes("Wrong Answer") ? (
-                      <div className="space-y-2">
-                        <p className="text-red-600 font-semibold">
-                          {" "}
-                          Wrong Answer
-                        </p>
-                        <pre className="whitespace-pre-wrap text-white">
-                          {outputText.replace("Wrong Answer", "").trim()}
-                        </pre>
-                      </div>
-                    ) : outputText.includes("Correct Answer") ? (
-                      <div className="space-y-2">
-                        <p className="text-green-600 font-semibold">
-                          Correct Answer
-                        </p>
-                        <pre className="whitespace-pre-wrap text-white">
-                          {outputText.replace("Correct Answer", "").trim()}
-                        </pre>
+                    {/* Output Row with status + metrics */}
+                    {outputText.includes("Wrong Answer") ||
+                    outputText.includes("Correct Answer") ? (
+                      <div className="flex justify-between items-start gap-4">
+                        {/* Output Label and Result */}
+                        <div className="space-y-1">
+                          <p
+                            className={`font-semibold ${
+                              outputText.includes("Wrong Answer")
+                                ? "text-red-500"
+                                : "text-green-500"
+                            }`}
+                          >
+                            {outputText.includes("Wrong Answer")
+                              ? "Wrong Answer"
+                              : "Correct Answer"}
+                          </p>
+                          <pre>
+                            {outputText
+                              .replace(/(Wrong Answer|Correct Answer)/, "")
+                              .trim()}
+                          </pre>
+                        </div>
+
+                        {/* Metrics */}
+                        {(execTime || memoryUsage) && (
+                          <div className="text-green-400 text-xs flex flex-col items-end gap-1 whitespace-nowrap pt-1">
+                            {execTime && <span>⏱ {execTime}</span>}
+                            {memoryUsage && <span>🧠 {memoryUsage}</span>}
+                          </div>
+                        )}
                       </div>
                     ) : (
                       <p className="text-gray-400">
                         {outputText || "Your output will appear here..."}
                       </p>
-                    )}
-
-                    {(execTime || memoryUsage) && (
-                      <div className="mt-4 text-green-400 text-xs flex justify-end gap-4">
-                        {execTime && <span>⏱ {execTime}</span>}
-                        {memoryUsage && <span>🧠 {memoryUsage}</span>}
-                      </div>
                     )}
                   </>
                 )}
@@ -444,74 +442,71 @@ const DSADetailPage = () => {
             </div>
           </div>
         </div>
+
+        {/* Floating Button */}
+        <button
+          className="fixed bottom-6 right-6 z-50 bg-[#282828] hover:bg-[#383838] text-white p-4 rounded-full shadow-lg"
+          onClick={() => setShowDSASidebar(true)}
+        >
+          <HiMiniBarsArrowUp size={20} />
+        </button>
+
+        {/* DSA Sidebar */}
+        {showDSASidebar && (
+          <div className="fixed top-0 right-0 z-50 w-80 max-w-full h-full bg-[#282828] shadow-xl border-l border-[#383838] flex flex-col">
+            <div className="sticky top-0 flex justify-between items-center px-5 py-3 border-b border-[#383838] bg-[#282828] z-10 shadow-md">
+              <h2 className="text-lg text-orange-400 font-semibold tracking-wide">
+                All DSA Questions
+              </h2>
+              <button
+                onClick={() => setShowDSASidebar(false)}
+                className="p-2 hover:bg-red-500/20 rounded-md transition"
+              >
+                <ImCross
+                  className="text-red-400 hover:text-red-500"
+                  size={14}
+                />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto px-4 py-3 space-y-2">
+              {dsaList.length > 0 ? (
+                <ul className="space-y-2">
+                  {dsaList.map((q) => (
+                    <li key={q._id}>
+                      <button
+                        onClick={() => {
+                          setShowDSASidebar(false);
+                          navigate(`/dsa/question/${q.id}`);
+                        }}
+                        className="w-full text-left bg-[#1A1A1A] hover:bg-[#383838] text-white p-3 rounded-md"
+                      >
+                        <div className="flex justify-between items-center capitalize">
+                          <span className="truncate">{q.title}</span>
+                          <span
+                            className={`text-xs font-medium ${getDifficultyColor(
+                              q.difficulty
+                            )}`}
+                          >
+                            {q.difficulty}
+                          </span>
+                        </div>
+                        {completedTitles.includes(q.title) && (
+                          <span className="text-green-400 text-xs">
+                            ✓ Completed
+                          </span>
+                        )}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-400 text-sm">No questions available.</p>
+              )}
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* Floating Button */}
-      <button
-        className="fixed bottom-6 right-6 z-50 bg-[#2c2c2e] hover:bg-[#3c3c3e] text-white p-4 rounded-full shadow-lg"
-        onClick={() => setShowDSASidebar(true)}
-      >
-        <HiMiniBarsArrowUp size={20} />
-      </button>
-
-      {/* DSA Sidebar */}
-      {showDSASidebar && (
-        <div className="fixed top-0 right-0 z-50 w-80 max-w-full h-full bg-[#1e1e22] shadow-xl border-l border-gray-700 flex flex-col">
-          {/* Clean Fixed Header */}
-          <div className="sticky top-0 flex justify-between items-center px-5 py-3 border-b border-gray-700 bg-[#1e1e22] z-10 shadow-md">
-            <h2 className="text-lg text-orange-400 font-semibold tracking-wide">
-              All DSA Questions
-            </h2>
-            <button
-              onClick={() => setShowDSASidebar(false)}
-              className="p-2 hover:bg-red-500/20 rounded-md transition duration-150"
-              title="Close"
-            >
-              <ImCross
-                className="text-red-400 hover:text-red-500 text-sm"
-                size={14}
-              />
-            </button>
-          </div>
-
-          {/* Scrollable Questions */}
-          <div className="flex-1 overflow-y-auto px-4 py-3 space-y-2">
-            {dsaList.length > 0 ? (
-              <ul className="space-y-2">
-                {dsaList.map((q) => (
-                  <li key={q._id}>
-                    <button
-                      onClick={() => {
-                        setShowDSASidebar(false);
-                        navigate(`/dsa/question/${q.id}`);
-                      }}
-                      className="block w-full text-left bg-[#2a2a2d] hover:bg-[#3a3a3d] text-white p-3 rounded-md transition duration-150"
-                    >
-                      <div className="flex justify-between items-center capitalize">
-                        <span className="truncate">{q.title}</span>
-                        <span
-                          className={`text-xs font-medium ${getDifficultyColor(
-                            q.difficulty
-                          )}`}
-                        >
-                          {q.difficulty}
-                        </span>
-                      </div>
-                      {completedTitles.includes(q.title) && (
-                        <span className="text-green-400 text-xs">
-                          ✓ Completed
-                        </span>
-                      )}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-400 text-sm">No questions available.</p>
-            )}
-          </div>
-        </div>
-      )}
     </>
   );
 };

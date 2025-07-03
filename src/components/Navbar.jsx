@@ -4,6 +4,7 @@ import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import { toast } from "sonner";
 import { useAuth } from "../context/AuthContext";
 import logo from "../assets/logo.png";
+import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_ITEMS = [
   { name: "Compiler", to: "/compiler" },
@@ -77,7 +78,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-[#1d1c20] text-white px-4 sm:px-6 lg:px-10 py-3 flex items-center justify-between relative z-30 lg:mx-18 mx-3 rounded-xl">
+    <nav className="bg-[#282828] text-white px-4 sm:px-6 lg:px-10 py-2 flex items-center justify-between relative z-30 lg:mx-18 mx-3 rounded-xl">
       {/* Logo */}
       <Link to="/" className="flex items-center gap-2">
         <img src={logo} alt="Mentee logo" className="w-10 h-10 rounded-full" />
@@ -85,12 +86,14 @@ const Navbar = () => {
           Mentee
         </span>
       </Link>
+
       {/* Desktop Nav */}
       <div className="hidden md:flex items-center gap-8">
         {NAV_ITEMS.map((item) => (
           <NavLink key={item.to} item={item} />
         ))}
       </div>
+
       {/* Desktop Profile */}
       <div
         ref={profileRef}
@@ -110,24 +113,36 @@ const Navbar = () => {
             >
               <FaUserCircle size={28} className="text-orange-400" />
             </button>
-            {profileOpen && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-[#2a2b30] rounded-lg shadow-lg ring-1 ring-[#2a2b30]/60">
-                <span className="absolute -top-2 right-5 w-3 h-3 rotate-45 bg-[#2a2b30]" />
-                <button
-                  onClick={() => navigate("/profile")}
-                  className="w-full text-left px-5 py-3 hover:bg-sky-600/80 font-semibold rounded-t-lg"
+
+            {/* Framer Motion Animated Dropdown */}
+            <AnimatePresence>
+              {profileOpen && (
+                <motion.div
+                  key="profile-dropdown"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-1 top-[110%] mt-2 w-48 bg-[#1f1f1f] rounded-md shadow-xl border border-[#333] z-50"
                 >
-                  Profile
-                </button>
-                <button
-                  onClick={handleLogout}
-                  disabled={isLoggingOut}
-                  className="w-full text-left px-5 py-3 text-red-400 hover:bg-red-700/80 rounded-b-lg font-semibold"
-                >
-                  Logout
-                </button>
-              </div>
-            )}
+                  {/* Arrow */}
+                  <span className="absolute -top-1.5 right-6 w-3 h-3 rotate-45 bg-[#1f1f1f] border-t border-l border-[#333]" />
+                  <button
+                    onClick={() => navigate("/profile")}
+                    className="w-full text-left px-5 py-3 hover:bg-sky-600/80 font-medium text-sm text-white rounded-t-md"
+                  >
+                    Profile
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    disabled={isLoggingOut}
+                    className="w-full text-left px-5 py-3 text-red-500 hover:text-white hover:bg-red-600 font-medium text-sm rounded-b-md"
+                  >
+                    Logout
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </>
         ) : (
           <button
@@ -138,6 +153,7 @@ const Navbar = () => {
           </button>
         )}
       </div>
+
       {/* Mobile Menu Toggle */}
       {!mobileOpen && (
         <button
@@ -148,15 +164,14 @@ const Navbar = () => {
           <FaBars size={22} />
         </button>
       )}
-      {/* Mobile Sidebar (Right Slide) */}
+
+      {/* Mobile Sidebar */}
       <div
-        className={`md:hidden fixed top-0 right-0 h-full w-64 bg-[#1d1c20] shadow-lg transition-transform duration-300 z-40 ${
+        className={`md:hidden fixed top-0 right-0 h-full w-64 bg-[#282828] shadow-lg transition-transform duration-300 z-40 ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* Sidebar Header: Logo + Close Icon */}
-        {/* Sidebar Header: Logo + Close Icon */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-[#1A1A1A]">
           <div className="flex items-center gap-2">
             <img
               src={logo}
@@ -176,7 +191,6 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Nav Items */}
         <div className="flex flex-col gap-2 px-4 py-4 text-left">
           {NAV_ITEMS.map((item) => (
             <NavLink
@@ -186,7 +200,7 @@ const Navbar = () => {
             />
           ))}
 
-          <hr className="border-gray-600 my-2" />
+          <hr className="border-[#282828] my-2" />
 
           {isLoggedIn ? (
             <>
